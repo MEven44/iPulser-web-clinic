@@ -31,8 +31,8 @@ def seed_treatments():
 def undo_treatments():
     if environment == "production":
         db.session.execute(
-            f"TRUNCATE table {SCHEMA}.members RESTART IDENTITY CASCADE;")
+            f"TRUNCATE table {SCHEMA}.treatments RESTART IDENTITY CASCADE;")
     else:
-        db.session.execute("DELETE FROM members")
+        db.session.execute("DELETE FROM treatments")
 
     db.session.commit()

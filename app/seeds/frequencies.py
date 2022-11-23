@@ -36,8 +36,8 @@ def seed_freqs():
 def undo_freq():
     if environment == "production":
         db.session.execute(
-            f"TRUNCATE table {SCHEMA}.members RESTART IDENTITY CASCADE;")
+            f"TRUNCATE table {SCHEMA}.frequencies RESTART IDENTITY CASCADE;")
     else:
-        db.session.execute("DELETE FROM members")
+        db.session.execute("DELETE FROM frequencies")
 
     db.session.commit()
