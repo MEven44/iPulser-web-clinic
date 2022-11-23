@@ -20,11 +20,12 @@ class Treatment(db.Model):
     
     users = db.relationship('User', back_populates = 'treatments')
     frequencies = db.relationship('Frequency', back_populates = 'treatments', cascade = 'all,delete')
+    trials = db.relationship('Trial', back_populates = 'treatments')
 
     def to_dict(self):
         return {
             'id': self.id,
-            'trearment_name':self.treatment_name,
+            'treatment_name':self.treatment_name,
             'comments': self.comments,
             'clinician': self.clinician,
             'frequencies': [freq.to_dict() for freq in self.frequencies],
