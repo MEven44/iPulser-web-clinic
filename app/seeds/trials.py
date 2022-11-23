@@ -30,8 +30,8 @@ def seed_trials():
 def undo_trials():
     if environment == "production":
         db.session.execute(
-            f"TRUNCATE table {SCHEMA}.members RESTART IDENTITY CASCADE;")
+            f"TRUNCATE table {SCHEMA}.trials RESTART IDENTITY CASCADE;")
     else:
-        db.session.execute("DELETE FROM members")
+        db.session.execute("DELETE FROM trials")
 
     db.session.commit()
