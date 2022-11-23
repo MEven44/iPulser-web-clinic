@@ -10,7 +10,7 @@ class Trial(db.Model):
     subject = db.Column(db.String, nullable = False)
     trial_scope = db.Column(db.String(255))
     description = db.Column(db.String(2000))
-    trial_manager = db.Column(db.Integer, ForeignKey(add_prefix_for_prod("users.id")))
+    trial_manager = db.Column(ForeignKey(add_prefix_for_prod("users.id")))
     admin = db.Column(db.Boolean)
     created_at = db.Column(db.DateTime(), nullable=False,server_default=func.now())
     updated_at = db.Column(db.DateTime(), nullable=False,onupdate=func.now(), default=func.now())

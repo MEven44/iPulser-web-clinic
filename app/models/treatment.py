@@ -11,10 +11,9 @@ class Treatment(db.Model):
     treatment_name = db.Column(db.String(100), nullable=False)
     admin  = db.Column(db.Boolean)
     comments = db.Column(db.String(355), nullable = True)
-    user_id = db.Column(db.Integer, ForeignKey(add_prefix_for_prod("users.id")))
-    trial_id = db.Column(
-        db.Integer, ForeignKey(add_prefix_for_prod("trials.id")))
-    frequencies_id = db.Column(db.Integer, ForeignKey(add_prefix_for_prod("frequencies.id")))
+    user_id = db.Column(ForeignKey(add_prefix_for_prod("users.id")))
+    trial_id = db.Column(ForeignKey(add_prefix_for_prod("trials.id")))
+    frequencies_id = db.Column(ForeignKey(add_prefix_for_prod("frequencies.id")))
     created_at = db.Column(db.DateTime(), nullable=False,server_default=func.now())
     updated_at = db.Column(db.DateTime(), nullable=False,onupdate=func.now(), default=func.now())
     
