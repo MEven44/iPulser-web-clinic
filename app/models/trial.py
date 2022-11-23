@@ -16,6 +16,7 @@ class Trial(db.Model):
     updated_at = db.Column(db.DateTime(), nullable=False,onupdate=func.now(), default=func.now())
 
     user = db.relationship('User', back_populates = 'trials')
+    treatments = db.relationship('Treatment', back_populates = 'trials')
    
     def to_dict(self):
         return {
