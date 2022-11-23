@@ -22,7 +22,7 @@ class Trial(db.Model):
         return {
             'id': self.id,
             'subject': self.subject,
-            'trial_scope': self.email,
+            'trial_scope': self.trial_scope,
             'description': self.description,
             'trial_manager': self.trial_manager,
             'created_at': self.created_at,
