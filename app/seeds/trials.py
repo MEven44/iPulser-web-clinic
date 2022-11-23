@@ -1,23 +1,21 @@
 from app.models import db, Trial, environment, SCHEMA
-from faker import Faker
-fake = Faker()
+
 
 def seed_trials():
     trial1 = Trial(
         subject='knee arthritis',
         trial_scope="20 subjects 18-35",
-        description="fake.text()"
+        description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed iaculis sapien odio, vel imperdiet diam aliquam eget. Aliquam non blandit tellus. Curabitur at aliquam enim, a pulvinar libero. Ut ut aliquet nibh. Fusce fringilla iaculis quam quis venenatis. Sed pulvinar elit nec tellus hendrerit"
     )
-
     trial2 = Trial(
         subject='head aches',
         trial_scope="100 female subjects 18-35",
-        description="fake.text()"
+        description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed iaculis sapien odio, vel imperdiet diam aliquam eget. Aliquam non blandit tellus. Curabitur at aliquam enim, a pulvinar libero. Ut ut aliquet nibh. Fusce fringilla iaculis quam quis venenatis. Sed pulvinar elit nec tellus hendrerit"
     )
     trial3 = Trial(
         subject='giddines',
         trial_scope="beta trial",
-        description="fake.text()"
+        description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed iaculis sapien odio, vel imperdiet diam aliquam eget. Aliquam non blandit tellus. Curabitur at aliquam enim, a pulvinar libero. Ut ut aliquet nibh. Fusce fringilla iaculis quam quis venenatis. Sed pulvinar elit nec tellus hendrerit"
     )
 
 
