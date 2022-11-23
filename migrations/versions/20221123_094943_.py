@@ -7,7 +7,9 @@ Create Date: 2022-11-23 09:49:43.995127
 """
 from alembic import op
 import sqlalchemy as sa
-
+import os
+enviroment = os.getenv('FLASK_ENV')
+SCHEMA = os.environ.get('SCHEMA')
 
 # revision identifiers, used by Alembic.
 revision = '28c386270a83'
@@ -24,6 +26,8 @@ def upgrade():
     sa.Column('time', sa.Float(), nullable=False),
     sa.PrimaryKeyConstraint('id')
     )
+    if enviroment == 'production':
+        op.execute(f'ALTER TABLE frequencies SET SCHEMA {SCHEMA};')
     op.create_table('users',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('name', sa.String(length=40), nullable=False),
@@ -34,6 +38,8 @@ def upgrade():
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('email')
     )
+    if enviroment == 'production':
+        op.execute(f'ALTER TABLE users SET SCHEMA {SCHEMA};')
     op.create_table('trials',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('subject', sa.String(), nullable=False),
@@ -46,6 +52,8 @@ def upgrade():
     sa.ForeignKeyConstraint(['trial_manager'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
+    if enviroment == 'production':
+        op.execute(f'ALTER TABLE trials SET SCHEMA {SCHEMA};')
     op.create_table('treatments',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('treatment_name', sa.String(length=100), nullable=False),
@@ -61,6 +69,8 @@ def upgrade():
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
+    if enviroment == 'production':
+        op.execute(f'ALTER TABLE treatments SET SCHEMA {SCHEMA};')
     # ### end Alembic commands ###
 
 
