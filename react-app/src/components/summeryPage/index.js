@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchUserTrials } from '../../store/trials'
 
@@ -8,8 +8,11 @@ const SummeryPage = () => {
     const dispatch = useDispatch()
 
     let state = useSelector(state=>state)
-    dispatch(fetchUserTrials())
     
+    
+    useEffect(()=>{
+        dispatch(fetchUserTrials())
+    },[dispatch])
     console.log('SHOW ME STATE', state)
 
     return(

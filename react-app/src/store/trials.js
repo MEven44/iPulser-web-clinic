@@ -2,7 +2,7 @@ const CREATE_TRIAL = "trials/CREATE_TRIAL";
 const LOAD_TRIALS = "trials/LOAD_TRIAL";
 const LOAD_ONE_TRIAL = "trials/LOAD_ONE_TRIAL";
 const UPDATE_TRIALS = "trials/UPDATE_TRIALS";
-const DELETE_TRIALS = "ELETE_TRIALS";
+const DELETE_TRIALS = "trials/DELETE_TRIALS";
 
 const createTrial = (trial) => {
   return {
@@ -47,46 +47,116 @@ export const fetchUserTrials = () => async (dispatch) => {
 
   if (response.ok) {
     const trials = await response.json();
-    dispatch(loadTrials(trials));
+    dispatch(loadTrials(trials.trials));
     return trials;
+  }
+};
+
+//NOTE create trial thunk
+export const createTrialThunk = (newTrial) => async(dispatch) => {
+    const response = await fetch('/api/trials/@me', {
+        method:'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(newTrial)
+    })
+    if (response.ok) {
+        const addedTrial = await response.json();
+        dispatch(createTrial(addedTrial))
+        return addedTrial
+    }else if (response.status < 500) {
+        const data = await response.json();
+        if (data.errors) {
+            return data
+        }
+    }
+    
+}
+
+// NOTE update a trial
+export const updateTrialThunk = (trialId) => async (dispatch) => {
+  const response = await fetch(`/api/trials/@me/${trialId}`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(response),
+  });
+
+  if (response.ok) {
+    const updated = await response.json();
+    dispatch(updateTrial(updated));
+    return updated;
+  } else if (response.status < 500) {
+    const data = await response.json();
+    if (data.errors) {
+      return data;
+    }
   }
 };
 
 
 
-// SECTION REDUCER
-
-const initialState = {
-  trials: {},
+// NOTE delete a trial
+export const deleteTrialThunk = (trialId) => async (dispatch) => {
+  
+  const response = await fetch(`/api/@me/${trialId}`, {
+    method: "DELETE",
+  });
+  if (response.ok) {
+    const deleted = await response.json();
+    dispatch(deleteTrial(trialId));
+    return deleted;
+  }
 };
 
+
+// NOTE get one trial
+export const getOneTrial = (trialId) => async (dispatch) => {
+  const response = await fetch(`/api/trials/@me/${trialId}`);
+
+  if (response.ok) {
+    const trial = await response.json();
+    // console.log('get server details thunk >>>>>>', server)
+    dispatch(loadOneTrial (trial));
+  }
+};
+
+
+// SECTION REDUCER
+
+const initialState = { };
+
 export const trialsReducer = (state = initialState, action) => {
-  let newState = {};
+  const trials = {}
 
   switch (action.type) {
     case LOAD_TRIALS: {
-      newState = { ...state };
-      newState.trials = {};
-      action.trials.forEach((trial) => {
-        newState.trials[trial.id] = trial;
-      });
+      const newState = { ...state };
+      
+      action.trials.forEach(trial=>{
+        trials[trial.id]=trial
+      })     
+      newState.trials = trials  
       return newState;
     }
 
     case CREATE_TRIAL: {
-        newState.trials = {...state.trials, [action.trial.id]:action.trial}
-        console.log('REDUCER NEW STATE',newState)
+        const newState = {...state.trials, [action.trial.id]:action.trial}
         return newState;
     }
 
     case DELETE_TRIALS: {
-        newState.trials = {...state}
-        return newState
+        const newState = {...state}
+        return newState;
     }
 
     case UPDATE_TRIALS: {
-        newState.trials =  {...state, [action.trial.id]:action.trial}
+        const newState =  {...state.trials, [action.trial.id]:action.trial}
+        return newState;
+    }
 
+    case LOAD_ONE_TRIAL: {
+      const newState = {...state.trials, [action.trial.id]:action.trial}
+      newState.OneTrial = {...action.trial}
+      return newState;
     }
     default:
       return state;

@@ -8,7 +8,7 @@ from .auth_routes import validation_errors_to_error_messages
 trials_routes = Blueprint('trials', __name__)
 
 #NOTE Get trial by ID
-@trials_routes.route('/<int:id>')
+@trials_routes.route('/@me/<int:id>')
 @login_required
 def get_trial(id):
     trial = Trial.query.get(int(id))
