@@ -8,5 +8,5 @@ class Trial_form(FlaskForm):
 
     subject = StringField('Trial subject', validators=[DataRequired()])
     trial_scope = StringField('Trial Scope', validators=[DataRequired()])
-    description = SelectField('Description')
-    admin = BooleanField('Admin', default=False)
+    description = StringField('Description')
+    # admin = BooleanField('Admin', default=False)
