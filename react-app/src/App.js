@@ -4,9 +4,11 @@ import { useDispatch } from 'react-redux';
 import LoginForm from './components/auth/LoginForm';
 import SignUpForm from './components/auth/SignUpForm';
 import NavBar from './components/NavBar';
+import TrialDetails from './components/TrialDesign';
 import ProtectedRoute from './components/auth/ProtectedRoute';
 import SummeryPage from './components/summeryPage'
 import { authenticate } from './store/session';
+import UpdateTrial from './components/updateTrial';
 
 function App() {
   const [loaded, setLoaded] = useState(false);
@@ -30,13 +32,15 @@ function App() {
           <LoginForm />
           <SignUpForm />
         </Route>
-        <ProtectedRoute path="/treatments" exact={true}>
-         
+        <ProtectedRoute path="/trial-design" exact={true}>
+         <TrialDetails />
+        </ProtectedRoute>
+        <ProtectedRoute path='/trials/@me/:id'>
+          <UpdateTrial />
         </ProtectedRoute>
        
         <Route path="/" exact={true}>
-          <h1>My Home Page</h1>
-         <SummeryPage />
+          <SummeryPage />
         </Route>
       </Switch>
       )}

@@ -12,25 +12,20 @@ const NavBar = ({loaded}) => {
  
   if (currentUser) {
   sessionLinks = (
-  
     <nav>
-        
-          <NavLink to='/' exact={true} activeClassName='active'>
-            Summery Page
-          </NavLink>
-      
-        
-          <NavLink to='/new-trial' exact={true} activeClassName='active'>
-            Design a trial
-          </NavLink>
-        
-         <NavLink to='/treatment' exact={true} activeClassName='active'>
-            Treatment controls
-          </NavLink>
-        
-        
-          <LogoutButton />
-        
+      <NavLink to="/" exact={true} activeClassName="active">
+        Summery Page
+      </NavLink>
+
+      <NavLink to="/trial-design" exact={true} activeClassName="active">
+        Design a trial
+      </NavLink>
+
+      <NavLink to="/treatment" exact={true} activeClassName="active">
+        Treatment controls
+      </NavLink>
+
+      <LogoutButton />
     </nav>
   );
   

@@ -8,7 +8,9 @@ from .auth_routes import validation_errors_to_error_messages
 trials_routes = Blueprint('trials', __name__)
 
 #NOTE Get trial by ID
-@trials_routes.route('/@me/<int:id>')
+
+
+@trials_routes.route('/@me/<int:id>', methods=['GET'])
 @login_required
 def get_trial(id):
     trial = Trial.query.get(int(id))
@@ -56,10 +58,11 @@ def post_new_trial():
 
 #NOTE update a trial
 
-@trials_routes.route('/@me/<int:id>', methods=['PUT'])
+@trials_routes.route('/@me/<int:trialId>', methods=['PUT'])
 @login_required
-def edit_trial(id):
-    trial = Trial.query.get(int(id))
+def edit_trial(trialId):
+    trial = Trial.query.get(int(trialId))
+    print('ROUTES TRIALS UPDATE', trial)
     if trial:
         form=Trial_form()
         form['csrf_token'].data = request.cookies['csrf_token']
