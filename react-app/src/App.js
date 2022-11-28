@@ -4,9 +4,11 @@ import { useDispatch } from 'react-redux';
 import LoginForm from './components/auth/LoginForm';
 import SignUpForm from './components/auth/SignUpForm';
 import NavBar from './components/NavBar';
+import TrialDetails from './components/TrialDesign';
 import ProtectedRoute from './components/auth/ProtectedRoute';
 import SummeryPage from './components/summeryPage'
 import { authenticate } from './store/session';
+
 
 function App() {
   const [loaded, setLoaded] = useState(false);
@@ -23,22 +25,28 @@ function App() {
 
   return (
     <BrowserRouter>
-      <NavBar loaded={loaded}/>
+      <NavBar loaded={loaded} />
       {loaded && (
-      <Switch>
-        <Route path="/login-signup" exact={true}>
-          <LoginForm />
-          <SignUpForm />
-        </Route>
-        <ProtectedRoute path="/treatments" exact={true}>
+        <Switch>
+          <Route path="/login-signup" exact={true}>
+            <div className="login-container">
+              <div className="login">
+                <LoginForm />
+              </div>
+              <div className="signup">
+                <SignUpForm />
+              </div>
+            </div>
+          </Route>
+          <ProtectedRoute path="/trial-design" exact={true}>
+            <TrialDetails />
+          </ProtectedRoute>
          
-        </ProtectedRoute>
-       
-        <Route path="/" exact={true}>
-          <h1>My Home Page</h1>
-         <SummeryPage />
-        </Route>
-      </Switch>
+
+          <Route path="/" exact={true}>
+            <SummeryPage />
+          </Route>
+        </Switch>
       )}
     </BrowserRouter>
   );
