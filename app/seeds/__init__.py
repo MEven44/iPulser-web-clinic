@@ -1,6 +1,6 @@
 from flask.cli import AppGroup
 from .users import seed_users, undo_users
-from .frequencies import seed_freqs,undo_freq
+
 from .trials import seed_trials,undo_trials
 from .treatments import seed_treatments,undo_treatments
 
@@ -22,8 +22,8 @@ def seed():
         undo_treatments()
         undo_trials()
         undo_users()
-        undo_freq()
-    seed_freqs()
+        
+    
     seed_users()
     seed_trials()
     seed_treatments()
@@ -36,6 +36,6 @@ def undo():
     undo_treatments()
     undo_trials()
     undo_users()
-    undo_freq()
+    
     
     # Add other undo functions here

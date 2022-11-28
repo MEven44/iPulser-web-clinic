@@ -1,17 +1,10 @@
 import { useEffect,useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useParams, useHistory} from "react-router-dom";
-import {  fetchUserTrials, updateTrialThunk } from "../../store/trials";
+import { useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
+import {  fetchUserTrials, updateTrialThunk , deleteTrialThunk} from "../../store/trials";
 
-const UpdateTrial = () => {
-    
-    let {id} = useParams()
-    id = +id
-    
-
-    const state = useSelector(state=>state)
-    const trial = state?.trials.trials[id]
-
+const TrialUpdateForm = ({trial}) => {
+   console.log('SHOW ME TRIAL IN TRIAL UPDATE FORM', trial)
     const [subject, setSubject] = useState(trial.subject);
     const [description, setDescription] = useState(trial.description);
     const [scope, setScope] = useState(trial.trial_scope);
@@ -45,7 +38,7 @@ const UpdateTrial = () => {
       
       };
     
-    const data = await dispatch(updateTrialThunk(id,newTrial));
+    const data = await dispatch(updateTrialThunk(newTrial));
     
     if (data.errors) {
         setError(data.errors)
@@ -54,8 +47,15 @@ const UpdateTrial = () => {
   };
 }
 
-  if (!trial) return null
-  else
+const delTrial = async (e) => {
+  e.preventDefault();
+  await dispatch(deleteTrialThunk(trial))
+  dispatch(fetchUserTrials())
+  
+}
+
+  // if (!trial) return null
+  // else
   return (
     <div id="form">
       <h1>Design the Trial</h1>
@@ -104,8 +104,11 @@ const UpdateTrial = () => {
           rows="10"
           id="description"
         ></textarea>
-        <button id="new-song-btn" type="submit" disabled={!!error.length}>
+        <button id="update-btn" type="submit" disabled={!!error.length}>
           Submit Edited Trial
+        </button>
+        <button id="update-btn" onClick={delTrial}>
+          Delete Trial
         </button>
       </form>
     </div>
@@ -113,4 +116,4 @@ const UpdateTrial = () => {
 };
 
 
-export default UpdateTrial
+export default TrialUpdateForm

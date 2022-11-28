@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField,SelectField,BooleanField
+from wtforms import StringField,SelectField,BooleanField,IntegerField
 from wtforms.validators import DataRequired
 
 
@@ -9,3 +9,4 @@ class Treatment_form(FlaskForm):
     trial_id = SelectField('Related to trial', choices=[])
     comments = StringField('Comments')
     admin = BooleanField('Admin', default=False)
+    

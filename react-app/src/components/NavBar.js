@@ -3,6 +3,8 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import LogoutButton from './auth/LogoutButton';
+import '../index.css'
+
 
 const NavBar = ({loaded}) => {
 
@@ -13,15 +15,25 @@ const NavBar = ({loaded}) => {
   if (currentUser) {
   sessionLinks = (
     <nav>
-      <NavLink to="/" exact={true} activeClassName="active">
+      <NavLink id="text-bar" to="/" exact={true} activeClassName="active">
         Summery Page
       </NavLink>
 
-      <NavLink to="/trial-design" exact={true} activeClassName="active">
+      <NavLink
+        id="text-bar"
+        to="/trial-design"
+        exact={true}
+        activeClassName="active"
+      >
         Design a trial
       </NavLink>
 
-      <NavLink to="/treatment" exact={true} activeClassName="active">
+      <NavLink
+        id="text-bar"
+        to="/treatment"
+        exact={true}
+        activeClassName="active"
+      >
         Treatment controls
       </NavLink>
 
@@ -31,14 +43,20 @@ const NavBar = ({loaded}) => {
   
 } else {
   sessionLinks = (
- <>
-  
-     <NavLink to="/login-signup" exact={true} activeClassName="active">
-       Login - Sign Up
-     </NavLink>
-   
- </>
-  )
+    <>
+     
+      <button>
+        <NavLink
+          id="a-nav"
+          to="/login-signup"
+          exact={true}
+          activeClassName="active"
+        >
+          Login - Sign Up
+        </NavLink>
+       </button>
+    </>
+  );
 }
 
 return <div id='header'>{loaded && sessionLinks}</div>

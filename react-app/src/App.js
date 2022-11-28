@@ -8,7 +8,7 @@ import TrialDetails from './components/TrialDesign';
 import ProtectedRoute from './components/auth/ProtectedRoute';
 import SummeryPage from './components/summeryPage'
 import { authenticate } from './store/session';
-import UpdateTrial from './components/updateTrial';
+
 
 function App() {
   const [loaded, setLoaded] = useState(false);
@@ -25,24 +25,28 @@ function App() {
 
   return (
     <BrowserRouter>
-      <NavBar loaded={loaded}/>
+      <NavBar loaded={loaded} />
       {loaded && (
-      <Switch>
-        <Route path="/login-signup" exact={true}>
-          <LoginForm />
-          <SignUpForm />
-        </Route>
-        <ProtectedRoute path="/trial-design" exact={true}>
-         <TrialDetails />
-        </ProtectedRoute>
-        <ProtectedRoute path='/trials/@me/:id'>
-          <UpdateTrial />
-        </ProtectedRoute>
-       
-        <Route path="/" exact={true}>
-          <SummeryPage />
-        </Route>
-      </Switch>
+        <Switch>
+          <Route path="/login-signup" exact={true}>
+            <div className="login-container">
+              <div className="login">
+                <LoginForm />
+              </div>
+              <div className="signup">
+                <SignUpForm />
+              </div>
+            </div>
+          </Route>
+          <ProtectedRoute path="/trial-design" exact={true}>
+            <TrialDetails />
+          </ProtectedRoute>
+         
+
+          <Route path="/" exact={true}>
+            <SummeryPage />
+          </Route>
+        </Switch>
       )}
     </BrowserRouter>
   );
