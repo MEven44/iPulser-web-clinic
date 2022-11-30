@@ -2,6 +2,9 @@ import { useEffect,useState } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import {  fetchUserTrials, updateTrialThunk , deleteTrialThunk} from "../../store/trials";
+import './update-trial.css'
+
+
 
 const TrialUpdateForm = ({trial}) => {
    console.log('SHOW ME TRIAL IN TRIAL UPDATE FORM', trial)
@@ -32,6 +35,7 @@ const TrialUpdateForm = ({trial}) => {
     e.preventDefault();
     setRenderErr(true)
     const newTrial = {
+      trialId: trial.id,
       subject,
       trial_scope: scope,
       description,
@@ -43,13 +47,13 @@ const TrialUpdateForm = ({trial}) => {
     if (data.errors) {
         setError(data.errors)
     } else {
-        history.push(`/design-trial`);
+        history.push(`/trial-design`);
   };
 }
 
 const delTrial = async (e) => {
   e.preventDefault();
-  await dispatch(deleteTrialThunk(trial))
+  await dispatch(deleteTrialThunk(trial.trialId))
   dispatch(fetchUserTrials())
   
 }
@@ -60,7 +64,7 @@ const delTrial = async (e) => {
     <div id="form">
       <h1>Design the Trial</h1>
 
-      <form onSubmit={handleSubmit}>
+      <form className = 'form-con' onSubmit={handleSubmit}>
         {renderErr && error.subjectErr ? (
           <label className="text renderError" htmlFor="name">
             Trial subject: {error.nameError}

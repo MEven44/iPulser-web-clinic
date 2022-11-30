@@ -5,7 +5,7 @@ from sqlalchemy import ForeignKey
 frequencies_treatments = db.Table(
     "frequencies_treatments",
     db.Model.metadata,
-    db.Column("treatmets_Id", ForeignKey(add_prefix_for_prod("treatments.id"))),
+    db.Column("treatments_Id", ForeignKey(add_prefix_for_prod("treatments.id"))),
     db.Column('frequencies_id', ForeignKey(add_prefix_for_prod("frequencies.id")), primary_key=True)
 )
 
@@ -15,20 +15,22 @@ class Frequency(db.Model):
     if environment == "production":
         __table_args__ = {'schema': SCHEMA}
     id = db.Column(db.Integer, primary_key=True)
-    freq = db.Column(db.Float, nullable=False)
-    time = db.Column(db.Float, nullable=False)
+    freq = db.Column(db.String, nullable=False)
+    time = db.Column(db.String, nullable=False)
 
   
     treatments = db.relationship(
         'Treatment', secondary=frequencies_treatments, back_populates="frequencies")
 
 
-def freq_to_dict(self):
-    return {
-        'id': self.id,
-        'freq': self.freq,
-        'time': self.time,
-    }
+    def freq_to_dict(self):
+        return {
+            'id': self.id,
+            'freq': self.freq,
+            'time': self.time,
+            }
+
+
 
 class Treatment(db.Model):
     __tablename__ = 'treatments'

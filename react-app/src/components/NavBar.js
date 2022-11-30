@@ -3,13 +3,14 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import LogoutButton from './auth/LogoutButton';
+import logo from './../images/logo.jpeg'
 import '../index.css'
 
 
 const NavBar = ({loaded}) => {
 
   let currentUser = useSelector(state=>state.session.user)
-  console.log ("NAVIGATION BAR USER", currentUser)
+  
   let sessionLinks;
  
   if (currentUser) {
@@ -26,15 +27,6 @@ const NavBar = ({loaded}) => {
         activeClassName="active"
       >
         Design a trial
-      </NavLink>
-
-      <NavLink
-        id="text-bar"
-        to="/treatment"
-        exact={true}
-        activeClassName="active"
-      >
-        Treatment controls
       </NavLink>
 
       <LogoutButton />
@@ -59,7 +51,12 @@ const NavBar = ({loaded}) => {
   );
 }
 
-return <div id='header'>{loaded && sessionLinks}</div>
+return (
+  <>
+  <img src={logo} alt='logo' />
+  <div id='header'>{loaded && sessionLinks}</div>
+  </>
+)
 }
 
 export default NavBar;
