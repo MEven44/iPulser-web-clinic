@@ -6,6 +6,7 @@ import { fetchUserTrials } from '../../store/trials'
 import TrialUpdateModal from '../TrialModal' 
 
 
+
 const SummeryPage = () => {
   const dispatch = useDispatch()
   const history = useHistory()

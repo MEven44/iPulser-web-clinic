@@ -57,13 +57,16 @@ def new_treatment(trialId):
 @login_required
 def edit_treatment(treatmentId):
     treatment = Treatment.query.get(int(treatmentId))
-    
-    
-    if treatment:
-        form = Treatment_form()
-        form['csrf_token'].data = request.cookies['csrf_token']
-        if form.validate_on_submit():
-            form.populate_obj(treatment)
+    form = Treatment_form()
+    form['csrf_token'].data = request.cookies['csrf_token']
+    if form.validate_on_submit():
+        data = form.data
+        if data['frequencies']:
+            treatment.frequencies = [Frequency(
+                freq=data['frequencies'].split(" ")[0],
+                time=data['frequencies'].split(" ")[1]
+            )]
+                
             db.session.commit()
 
 
