@@ -8,6 +8,7 @@ import TrialDetails from './components/TrialDesign';
 import ProtectedRoute from './components/auth/ProtectedRoute';
 import SummeryPage from './components/summeryPage'
 import { authenticate } from './store/session';
+import Treatments from './components/treatments';
 
 
 function App() {
@@ -40,6 +41,9 @@ function App() {
           </Route>
           <ProtectedRoute path="/trial-design" exact={true}>
             <TrialDetails />
+          </ProtectedRoute>
+          <ProtectedRoute path='/treatments/:trialId'>
+            <Treatments />
           </ProtectedRoute>
          
 

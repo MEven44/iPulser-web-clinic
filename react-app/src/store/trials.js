@@ -73,14 +73,15 @@ export const createTrialThunk = (newTrial) => async(dispatch) => {
 }
 
 // NOTE update a trial
-export const updateTrialThunk = (id, update) => async (dispatch) => {
+export const updateTrialThunk = (update) => async (dispatch) => {
  
-  const response = await fetch(`/api/trials/@me/${id}`, {
+  const response = await fetch(`/api/trials/@me/${update.trialId}`, {
+    
     method: "PUT",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(update),
   });
-
+  
   if (response.ok) {
     const updated = await response.json();
     dispatch(updateTrial(updated));

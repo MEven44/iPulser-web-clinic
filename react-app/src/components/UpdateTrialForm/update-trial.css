@@ -1,0 +1,15 @@
+#form {
+    display:flex
+}
+
+input {
+    border-radius: 5px;
+    margin: 5%;
+}
+
+
+.form-con {
+    display: flex;
+    flex-direction: column;
+    padding: 3%;
+}

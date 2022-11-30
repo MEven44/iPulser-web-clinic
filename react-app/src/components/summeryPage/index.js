@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { NavLink, useHistory } from 'react-router-dom'
 
 import { fetchUserTrials } from '../../store/trials'
 import TrialUpdateModal from '../TrialModal' 
 
 
-
 const SummeryPage = () => {
-    const dispatch = useDispatch()
+  const dispatch = useDispatch()
+  const history = useHistory()
     
 
     let state = useSelector(state=>state)
@@ -18,6 +19,10 @@ const SummeryPage = () => {
       dispatch(fetchUserTrials());
     }, [dispatch]);
  
+   
+    
+
+
 if (!trialsOfUser) return null
 else
     return (
@@ -27,10 +32,23 @@ else
         </h1>
         <div className="trials conteiner">Trials:
           {Object.values(trialsOfUser).map((trial) => {
-            console.log("SUMMERY PAGE", trial)
+            
             return (
               <>
-                <TrialUpdateModal trial={trial} />
+                <div className="trial-name">
+                  {trial.subject}
+                  <TrialUpdateModal trial={trial} />
+                  <button>
+                    <NavLink
+                      id="a-nav"
+                      to={`/treatments/${trial.id}`}
+                      exact={true}
+                      activeClassName="active"
+                    >
+                      treatment controls
+                    </NavLink>
+                  </button>
+                </div>
               </>
             );})}        
         </div>

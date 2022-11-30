@@ -38,7 +38,7 @@ def get_user_trials():
 #NOTE Post a new trial
 
 @trials_routes.route('/@me', methods=['POST'])
-# @login_required
+@login_required
 def post_new_trial():
     form = Trial_form()
     form['csrf_token'].data = request.cookies['csrf_token']
