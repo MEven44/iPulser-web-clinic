@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: df2f91e01a2f
+Revision ID: 7297f97ce135
 Revises: 
-Create Date: 2022-11-30 09:39:42.543014
+Create Date: 2022-11-30 14:37:43.626430
 
 """
 from alembic import op
@@ -12,7 +12,7 @@ environment = os.getenv('FLASK_ENV')
 SCHEMA = os.environ.get('SCHEMA')
 
 # revision identifiers, used by Alembic.
-revision = 'df2f91e01a2f'
+revision = '7297f97ce135'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -27,8 +27,7 @@ def upgrade():
     sa.PrimaryKeyConstraint('id')
     )
     if environment == 'production':
-        op.execute(f'ALTER TABLE frequencies SET SCHEMA {SCHEMA};')
-
+        op.execute(f'ALTER TABLE frequencies SET SCHEMA {SCHEMA}')
     op.create_table('users',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('name', sa.String(length=40), nullable=False),
@@ -40,7 +39,7 @@ def upgrade():
     sa.UniqueConstraint('email')
     )
     if environment == 'production':
-        op.execute(f'ALTER TABLE users SET SCHEMA {SCHEMA};')
+        op.execute(f'ALTER TABLE users SET SCHEMA {SCHEMA}')
     op.create_table('trials',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('subject', sa.String(), nullable=False),
@@ -54,7 +53,7 @@ def upgrade():
     sa.PrimaryKeyConstraint('id')
     )
     if environment == 'production':
-        op.execute(f'ALTER TABLE trials SET SCHEMA {SCHEMA};')
+        op.execute(f'ALTER TABLE trials SET SCHEMA {SCHEMA}')
     op.create_table('treatments',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('treatment_name', sa.String(length=100), nullable=False),
@@ -69,16 +68,16 @@ def upgrade():
     sa.PrimaryKeyConstraint('id')
     )
     if environment == 'production':
-        op.execute(f'ALTER TABLE treatments SET SCHEMA {SCHEMA};')
+        op.execute(f'ALTER TABLE treatments SET SCHEMA {SCHEMA}')
     op.create_table('frequencies_treatments',
-    sa.Column('treatments_id', sa.Integer(), nullable=True),
+    sa.Column('treatments_id', sa.Integer(), nullable=False),
     sa.Column('frequencies_id', sa.Integer(), nullable=False),
     sa.ForeignKeyConstraint(['frequencies_id'], ['frequencies.id'], ),
     sa.ForeignKeyConstraint(['treatments_id'], ['treatments.id'], ),
-    sa.PrimaryKeyConstraint('frequencies_id')
+    sa.PrimaryKeyConstraint('treatments_id', 'frequencies_id')
     )
     if environment == 'production':
-        op.execute(f'ALTER TABLE frequencies_treatments SET SCHEMA {SCHEMA};')
+        op.execute(f'ALTER TABLE frequencies_treatments SET SCHEMA {SCHEMA}')
     # ### end Alembic commands ###
 
 

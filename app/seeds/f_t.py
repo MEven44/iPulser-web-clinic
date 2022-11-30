@@ -28,12 +28,12 @@ def seed_frequencies_treatments():
     tf3.frequencies.append(fq4)
 
     db.session.commit()
-    
-    def undo_frequencies_treatments():
+
+def undo_frequencies_treatments():
         if environment == "production":
             db.session.execute(
                 f"TRUNCATE table {SCHEMA}.frequencies_treatments RESTART IDENTITY CASCADE;")
         else:
             db.session.execute("DELETE FROM treatments")
 
-    db.session.commit()
+        db.session.commit()
