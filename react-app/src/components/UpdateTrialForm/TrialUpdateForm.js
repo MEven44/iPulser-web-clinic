@@ -108,7 +108,7 @@ const delTrial = async (e) => {
           rows="10"
           id="description"
         ></textarea>
-        <button id="update-btn" type="submit" disabled={!!error.length}>
+        <button id="update-btn" type="submit" disabled={!!error}>
           Submit Edited Trial
         </button>
         <button id="update-btn" onClick={delTrial}>

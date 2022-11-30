@@ -3,7 +3,7 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import LogoutButton from './auth/LogoutButton';
-import logo from './../images/logo.jpeg'
+import logo from './../images/iPulser Identity/iPulserLogo_s.png'
 import '../index.css'
 
 
@@ -53,10 +53,12 @@ const NavBar = ({loaded}) => {
 
 return (
   <>
-  <img src={logo} alt='logo' />
-  <div id='header'>{loaded && sessionLinks}</div>
+    <div className="navbar-container">
+      <img src={logo} alt="logo" />
+      <div id="header">{loaded && sessionLinks}</div>
+    </div>
   </>
-)
+);
 }
 
 export default NavBar;
