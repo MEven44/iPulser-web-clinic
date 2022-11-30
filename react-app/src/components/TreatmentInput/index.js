@@ -2,7 +2,7 @@ import React from 'react'
 import { useState, useEffect} from 'react'
 import {useSelector, useDispatch} from 'react-redux'
 import { useParams } from 'react-router-dom'
-import { getTreatmentsOfTrial } from '../../store/treatments'
+import { createTreatmentThunk, getTreatmentsOfTrial } from '../../store/treatments'
 
 
 
@@ -35,52 +35,58 @@ const handleSubmit = async (e) => {
     setErrRender(true)
     
     // console.log('----------',validUrl)
-    const newServer = {
-      treatmentName,
+    const treatment = {
+      treatment_name: treatmentName,
       frequencies: `${frequency} ${time}`,
-      comments
+      comments,
+      trialId:+trialId
       
     };
+    console.log('SSHOW ME WHAT TREATMENT IM SENDING BACK', treatment.frequencies)
+    dispatch(createTreatmentThunk(treatment))
 }
 
     return (
       <div className="Container">
-        <div className="left"></div>
-        <input
-          type="text"
-          className="input-treatment"
-          value={treatmentName}
-          onChange={(e) => setTreatmentName(e.target.value)}
-          name="frequency"
-        />
-        Treatment Name
-        <input
-          type="text"
-          className="input-treatment"
-          value={frequency}
-          onChange={(e) => setFrequency(e.target.value)}
-          name="frequency"
-        />
-        frequency
-        <input
-          type="text"
-          className="input-treatment"
-          value={time}
-          onChange={(e) => setTime(e.target.value)}
-          name="frequency"
-        />
-        Time
-        <textarea
-          type="text"
-          className="input-treatment"
-          value={comments}
-          onChange={(e) => setComments(e.target.value)}
-          name="frequency"
-        />
-        Time
+        <div className="left">
+          <form>
+            <input
+              type="text"
+              className="input-treatment"
+              value={treatmentName}
+              onChange={(e) => setTreatmentName(e.target.value)}
+              name="frequency"
+            />
+            Treatment Name
+            <input
+              type="text"
+              className="input-treatment"
+              value={frequency}
+              onChange={(e) => setFrequency(e.target.value)}
+              name="frequency"
+            />
+            frequency
+            <input
+              type="text"
+              className="input-treatment"
+              value={time}
+              onChange={(e) => setTime(e.target.value)}
+              name="frequency"
+            />
+            Time
+            <textarea
+              type="text"
+              className="input-treatment"
+              value={comments}
+              onChange={(e) => setComments(e.target.value)}
+              name="frequency"
+            />
+            Time
+            <button type='submit' onClick={handleSubmit}>Submit</button>
+          </form>
+        </div>
         <div className="right">
-          <button className="controls">
-          Play / pause</button>
+          <button className="controls">Play / pause</button>
           <button className="controls">Stop</button>
         </div>
       </div>

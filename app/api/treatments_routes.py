@@ -32,8 +32,8 @@ def new_treatment(trialId):
             treatment_name=data['treatment_name'],
             comments = data['comments'],
             frequencies = [Frequency(
-                freq = data['frequencies'].split(",")[0][0],
-                time = data['frequencies'].split(",")[0][2]
+                freq = data['frequencies'].split(" ")[0],
+                time = data['frequencies'].split(" ")[1]
             )]             
             
         )
