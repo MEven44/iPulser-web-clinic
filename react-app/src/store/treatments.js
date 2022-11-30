@@ -1,4 +1,4 @@
-import Treatments from "../components/treatments";
+import Treatments from "../components/TreatmentInput";
 
 const CREATE_TREATMENT = "trials/CREATE_TREATMENT";
 const LOAD_TREATMENTS = "trials/LOAD_TREATMENTS";
@@ -38,12 +38,13 @@ const deleteTreatment = (treatment) => {
 //SECTION thunks
 //NOTE get all treatments of a trial
 
-export const getTreatmentsOfTrial = () => async (dispatch) => {
-  const response = await fetch("/api/treatments/:trialId");
+export const getTreatmentsOfTrial = (trialId) => async (dispatch) => {
+  const response = await fetch(`/api/treatments/${trialId}`);
 
   if (response.ok) {
     const treatments = await response.json();
     dispatch(loadTreatments(treatments));
+    console.log('TREATMENT THUNK', treatments)
     return treatments;
   }
 };
@@ -105,16 +106,15 @@ export const deleteTrialThunk = (treatment) => async (dispatch) => {
 const initialState = {};
 
 export const treatmentsReducer = (state = initialState, action) => {
-  const treatments = { frequencies: {}};
+  
 
   switch (action.type) {
     case LOAD_TREATMENTS: {
-      const newState = { ...state };
-
-      action.treatments.forEach((treatment) => {
-        treatment[treatment.id] = treatment;
-      });
-      newState.treatments = treatments;
+      const newState = { ...state, treatments: {}};
+      // action.treatments.forEach((treatment) => {
+      // treatment[treatment.id] = treatment;
+      // });
+      // newState.treatments = treatments;
       return newState;
     }
 

@@ -97,14 +97,14 @@ export const updateTrialThunk = (update) => async (dispatch) => {
 
 
 // NOTE delete a trial
-export const deleteTrialThunk = (trialId) => async (dispatch) => {
+export const deleteTrialThunk = (trial) => async (dispatch) => {
   
-  const response = await fetch(`/api/@me/${trialId}`, {
+  const response = await fetch(`/api/@me/${trial.id}`, {
     method: "DELETE",
   });
   if (response.ok) {
     const deleted = await response.json();
-    dispatch(deleteTrial(trialId));
+    dispatch(deleteTrial(trial.Id));
     return deleted;
   }
 };

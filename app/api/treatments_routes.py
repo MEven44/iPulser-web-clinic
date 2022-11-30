@@ -13,9 +13,7 @@ treatments_routes = Blueprint('treatments', __name__)
 @login_required
 def get_trial_treatments(trialId):
     treatments = Treatment.query.filter_by(trial_id=trialId)
-    
     treatments_list = [treatment.trt_to_dict() for treatment in treatments]
-    print('GET TREATMENTS BY TRIAL', treatments_list)
     
     return {'treatments': treatments_list}, 200
 

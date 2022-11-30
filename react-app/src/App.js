@@ -8,7 +8,7 @@ import TrialDetails from './components/TrialDesign';
 import ProtectedRoute from './components/auth/ProtectedRoute';
 import SummeryPage from './components/summeryPage'
 import { authenticate } from './store/session';
-import Treatments from './components/treatments';
+import Treatments from './components/TreatmentInput';
 
 
 function App() {
