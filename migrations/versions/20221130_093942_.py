@@ -40,7 +40,7 @@ def upgrade():
     sa.UniqueConstraint('email')
     )
     if environment == 'production':
-    op.execute(f'ALTER TABLE users SET SCHEMA {SCHEMA}')
+        op.execute(f'ALTER TABLE users SET SCHEMA {SCHEMA}')
     op.create_table('trials',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('subject', sa.String(), nullable=False),
@@ -54,7 +54,7 @@ def upgrade():
     sa.PrimaryKeyConstraint('id')
     )
     if environment == 'production':
-    op.execute(f'ALTER TABLE trials SET SCHEMA {SCHEMA}')
+        op.execute(f'ALTER TABLE trials SET SCHEMA {SCHEMA}')
     op.create_table('treatments',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('treatment_name', sa.String(length=100), nullable=False),
@@ -69,7 +69,7 @@ def upgrade():
     sa.PrimaryKeyConstraint('id')
     )
     if environment == 'production':
-    op.execute(f'ALTER TABLE treatments SET SCHEMA {SCHEMA}')
+        op.execute(f'ALTER TABLE treatments SET SCHEMA {SCHEMA}')
     op.create_table('frequencies_treatments',
     sa.Column('treatments_Id', sa.Integer(), nullable=True),
     sa.Column('frequencies_id', sa.Integer(), nullable=False),
@@ -78,7 +78,7 @@ def upgrade():
     sa.PrimaryKeyConstraint('frequencies_id')
     )
     if environment == 'production':
-    op.execute(f'ALTER TABLE frequencies_treatments SET SCHEMA {SCHEMA}')
+        op.execute(f'ALTER TABLE frequencies_treatments SET SCHEMA {SCHEMA}')
     # ### end Alembic commands ###
 
 
