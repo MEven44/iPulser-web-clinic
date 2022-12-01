@@ -45,7 +45,7 @@ const [success, setSuccess] = useState(false)
 const handleSubmit = (e) => {
     e.preventDefault()
     const treatment = {
-    //   id: id,
+    
       treatment_name: treatmentName,
       frequencies: `${frequency} ${time}`,
       comments,
@@ -55,9 +55,10 @@ const handleSubmit = (e) => {
     history.push('/summery')
 }
 
-const delTrt = async (e) => {
+const delTrt =  (e) => {
     e.preventDefault();
-    await dispatch(deleteTreatmentThunk(id))
+    dispatch(deleteTreatmentThunk(id))
+    history.push('/summery')
 }
 
 
@@ -102,7 +103,7 @@ return (
         name="frequency"
       />
 
-      <label for="select-trial">Choose a trial</label>
+      {/* <label for="select-trial">Choose a trial</label>
       <select
         name="trials"
         id="trials-select"
@@ -113,7 +114,7 @@ return (
         {trials.map((trial) => (
           <option value={trial.id}>{trial.subject}</option>
         ))}
-      </select>
+      </select> */}
       <button type="submit">Update</button>
       <button onClick={delTrt}>delete</button>
       {success && (<div>You successfully updated the treatment</div>)}

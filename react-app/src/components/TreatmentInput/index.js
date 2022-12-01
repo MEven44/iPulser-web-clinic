@@ -17,8 +17,8 @@ const [comments, setComments] = useState()
 const [time, setTime] = useState()
 const [errors, setErrors] = useState({})
 const [errRender,setErrRender] = useState(false)
-const [showTreatment, setShowTreatment] = useState(false)
-const [updateTreatment, setUpdateTreatment] = useState(false)
+
+
 const dispatch = useDispatch()
 let state = useSelector(state=>state)
 const recentTreatment = state.treatment
@@ -46,7 +46,7 @@ const handleSubmit = async (e) => {
     };
    
     dispatch(createTreatmentThunk(treatment))
-    setShowTreatment(true)
+    history.push('/summery')
 }
 
 

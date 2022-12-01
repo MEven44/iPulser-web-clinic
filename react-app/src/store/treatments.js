@@ -34,10 +34,10 @@ const updateTreatment = (treatment) => {
   };
 };
 
-const deleteTreatment = (treatment) => {
+const deleteTreatment = (treatmentId) => {
   return {
     type: DELETE_TREATMENT,
-    treatment,
+    treatmentId,
   };
 };
 
@@ -94,11 +94,11 @@ export const updateTreatmentThunk = (updated, id) => async (dispatch) => {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(updated),
   });
-console.log("TREATMENT REDUCER THUNK UPDATE", updated);
+
   if (response.ok) {
 
     const updatedTreatment = await response.json();
-    console.log("TREATMENT REDUCER ****************** second", updatedTreatment);
+    
     dispatch(updateTreatment(updatedTreatment));
     return updateTreatment;
   } else if (response.status < 500) {
@@ -111,7 +111,7 @@ console.log("TREATMENT REDUCER THUNK UPDATE", updated);
 
 // NOTE delete a treatment
 export const deleteTreatmentThunk = (id) => async (dispatch) => {
-  const response = await fetch(`/api/treatments/${id}`, {
+  const response = await fetch(`/api/treatments/${+id}`, {
     method: "DELETE",
   });
   if (response.ok) {
