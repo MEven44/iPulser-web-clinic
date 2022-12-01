@@ -1,7 +1,7 @@
 import React from 'react'
 import { useState, useEffect} from 'react'
 import {useSelector, useDispatch} from 'react-redux'
-import { useParams } from 'react-router-dom'
+import { useParams, useHistory} from 'react-router-dom'
 import { createTreatmentThunk, getTreatmentsOfTrial } from '../../store/treatments'
 
 
@@ -20,7 +20,7 @@ const [errRender,setErrRender] = useState(false)
 const dispatch = useDispatch()
 let state = useSelector(state=>state)
 console.log('TREATMENT PAGE STATE TO PLAY WITH', state)
-
+const history = useHistory()
 useEffect(()=>{
     if (frequency < 0.1 || frequency > 15000) errors.frequency = 'pick a frequency between 0.1 to 15,000'
     if (time < 1 || time > 15) errors.time = 'choose the time in minutes between 1 to 15 minutes'
@@ -42,8 +42,9 @@ const handleSubmit = async (e) => {
       trialId:+trialId
       
     };
-    console.log('SSHOW ME WHAT TREATMENT IM SENDING BACK', treatment.frequencies)
+   
     dispatch(createTreatmentThunk(treatment))
+    history.push('/')
 }
 
     return (

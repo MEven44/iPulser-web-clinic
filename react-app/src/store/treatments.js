@@ -40,11 +40,11 @@ const deleteTreatment = (treatment) => {
 
 export const getTreatmentsOfTrial = (trialId) => async (dispatch) => {
   const response = await fetch(`/api/treatments/${trialId}`);
-
+ 
   if (response.ok) {
     const treatments = await response.json();
     dispatch(loadTreatments(treatments));
-    console.log('TREATMENT THUNK', treatments)
+   
     return treatments;
   }
 };
@@ -110,11 +110,12 @@ export const treatmentsReducer = (state = initialState, action) => {
 
   switch (action.type) {
     case LOAD_TREATMENTS: {
-      const newState = { ...state, treatments: {}};
-      // action.treatments.forEach((treatment) => {
-      // treatment[treatment.id] = treatment;
-      // });
-      // newState.treatments = treatments;
+      const newState = { ...state};
+      let obj = {}
+      action.treatments.treatments.forEach((treatment) => {
+      obj[treatment.id] = treatment;
+      });
+      newState.treatments = obj
       return newState;
     }
 
