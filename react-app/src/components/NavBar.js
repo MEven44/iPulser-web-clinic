@@ -16,7 +16,7 @@ const NavBar = ({loaded}) => {
   if (currentUser) {
   sessionLinks = (
     <nav>
-      <NavLink id="text-bar" to="/" exact={true} activeClassName="active">
+      <NavLink id="text-bar" to="/summery" exact={true} activeClassName="active">
         Summery Page
       </NavLink>
 

@@ -1,9 +1,17 @@
 import Treatments from "../components/TreatmentInput";
 
-const CREATE_TREATMENT = "trials/CREATE_TREATMENT";
-const LOAD_TREATMENTS = "trials/LOAD_TREATMENTS";
-const UPDATE_TREATMENT = "trials/UPDATE_TREATMENT";
-const DELETE_TREATMENT = "trials/DELETE_TREATMENT";
+const CREATE_TREATMENT = "treatments/CREATE_TREATMENT";
+const LOAD_TREATMENTS = "treatments/LOAD_TREATMENTS";
+const UPDATE_TREATMENT = "treatments/UPDATE_TREATMENT";
+const DELETE_TREATMENT = "treatments/DELETE_TREATMENT";
+const ALL_TREATMENTS = "treatments/ALL_TREATMENTS";
+
+const allTreatments = (treatments) => {
+  return {
+    type: ALL_TREATMENTS,
+    treatments
+  }
+}
 
 const createTreatment = (treatment) => {
   return {
@@ -26,8 +34,6 @@ const updateTreatment = (treatment) => {
   };
 };
 
-
-
 const deleteTreatment = (treatment) => {
   return {
     type: DELETE_TREATMENT,
@@ -36,6 +42,18 @@ const deleteTreatment = (treatment) => {
 };
 
 //SECTION thunks
+
+// NOTE get all treatments
+export const getAllTreatments = (treatments) => async (dispatch) => {
+  const response = await fetch('/api/treatments/')
+
+  if (response.ok) {
+    const treatments = await response.json()
+    dispatch(allTreatments(treatments))
+    return treatments
+  }
+ }
+
 //NOTE get all treatments of a trial
 
 export const getTreatmentsOfTrial = (trialId) => async (dispatch) => {
@@ -131,6 +149,17 @@ export const treatmentsReducer = (state = initialState, action) => {
 
     case UPDATE_TREATMENT: {
       const newState = { ...state.treatments, [action.treatment.id]: action.treatment };
+      return newState;
+    }
+
+    case ALL_TREATMENTS: {
+      const newState = { ...state};
+      let obj = {};
+      console.log('REDUCER ALL TREATMENTS',action)
+      action.treatments.treatments.forEach((treatment) => {
+        obj[treatment.id] = treatment;
+      });
+      newState.treatments = obj;
       return newState;
     }
 

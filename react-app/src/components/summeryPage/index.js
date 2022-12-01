@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { NavLink, useHistory } from 'react-router-dom'
-import { getTreatmentsOfTrial } from '../../store/treatments'
+import { getTreatmentsOfTrial, getAllTreatments } from '../../store/treatments'
 
 import { fetchUserTrials } from '../../store/trials'
 import TrialUpdateModal from '../TrialModal' 
@@ -16,12 +16,12 @@ const SummeryPage = () => {
     let state = useSelector(state=>state)
     let currentUser = state.session.user
     let trialsOfUser = state.trials.trials
-    let treatments = state.treatments.treatments
-    console.log('SUMMERY PAGE TRATMENTS', treatments)
+    
+    
     
     useEffect(() => {
       dispatch(fetchUserTrials());
-      
+      dispatch(getAllTreatments())
     }, [dispatch]);
  
    const [trialSummery, setTrialSummery] = useState(false)
@@ -76,8 +76,8 @@ else
                         details:
                         {trial.description}
                       </div>
-
-                     
+                      
+                                      
                     </div>
                   </div>
                 )}
