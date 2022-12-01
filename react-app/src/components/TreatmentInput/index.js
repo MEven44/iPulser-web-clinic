@@ -19,7 +19,7 @@ const [errors, setErrors] = useState({})
 const [errRender,setErrRender] = useState(false)
 const dispatch = useDispatch()
 let state = useSelector(state=>state)
-console.log('TREATMENT PAGE STATE TO PLAY WITH', state)
+
 const history = useHistory()
 useEffect(()=>{
     if (frequency < 0.1 || frequency > 15000) errors.frequency = 'pick a frequency between 0.1 to 15,000'

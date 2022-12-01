@@ -24,7 +24,7 @@ const LoginForm = () => {
     if (data) {
       setErrors(data)
     } else {
-      <Redirect to='/' />
+      <Redirect to='/summery' />
     }
   }
 
@@ -37,7 +37,7 @@ const LoginForm = () => {
   };
 
   if (user) {
-    return <Redirect to='/' />;
+    return <Redirect to='/summery' />;
   }
 
   return (

@@ -42,14 +42,14 @@ function App() {
           <ProtectedRoute path="/trial-design" exact={true}>
             <TrialDetails />
           </ProtectedRoute>
-          <ProtectedRoute path='/treatments/:trialId'>
+          <ProtectedRoute path="/treatments/:trialId">
             <Treatments />
           </ProtectedRoute>
-         
-
-          <Route path="/" exact={true}>
+          <Route path="/summery">
             <SummeryPage />
           </Route>
+
+          <Route path="/" exact={true}></Route>
         </Switch>
       )}
     </BrowserRouter>
