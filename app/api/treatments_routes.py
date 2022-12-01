@@ -74,22 +74,24 @@ def edit_treatment(treatmentId):
     form['csrf_token'].data = request.cookies['csrf_token']
     if form.validate_on_submit():
         data = form.data
-        if data['frequencies']:
-            treatment.frequencies = [Frequency(
-                freq=data['frequencies'].split(" ")[0],
-                time=data['frequencies'].split(" ")[1]
-            )]
-                
-            db.session.commit()
-
-
+       
+        treatment.treatment_name = data['treatment_name']
+        treatment.comments = data['comments']
+        
+        treatment.frequencies = [Frequency(
+            freq=data['frequencies'].split(" ")[0],
+            time=data['frequencies'].split(" ")[1]
+        )]
+                    
+        db.session.commit()
+        return (treatment.trt_to_dict())
+    else:
         return {'errors':validation_errors_to_error_messages(form.errors)}, 400
-    return {'message': "treatment not found", 
-                'status code': 404}, 404
+    
 
 # NOTE treatment delete
 
-@treatments_routes.route('//<int:treatmentId>', methods=["DELETE"])
+@treatments_routes.route('/<int:treatmentId>', methods=["DELETE"])
 @login_required
 def delete_treatment(treatmentId):
     treatment = Treatment.query.get(int(treatmentId))

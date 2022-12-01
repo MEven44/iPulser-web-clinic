@@ -48,7 +48,7 @@ const TrialUpdateForm = ({trial}) => {
     if (data.errors) {
         setError(data.errors)
     } else {
-        history.push(`/trial-design`);
+        history.push(`/summery`);
   };
 }
 
