@@ -2,7 +2,7 @@ import React from 'react'
 import { useState, useEffect} from 'react'
 import {useSelector, useDispatch} from 'react-redux'
 import { useParams, useHistory} from 'react-router-dom'
-import { createTreatmentThunk, getTreatmentsOfTrial } from '../../store/treatments'
+import { createTreatmentThunk, getTreatmentsOfTrial, updateTreatmentThunk } from '../../store/treatments'
 
 
 
@@ -17,9 +17,11 @@ const [comments, setComments] = useState()
 const [time, setTime] = useState()
 const [errors, setErrors] = useState({})
 const [errRender,setErrRender] = useState(false)
+const [showTreatment, setShowTreatment] = useState(false)
+const [updateTreatment, setUpdateTreatment] = useState(false)
 const dispatch = useDispatch()
 let state = useSelector(state=>state)
-
+const recentTreatment = state.treatment
 const history = useHistory()
 useEffect(()=>{
     if (frequency < 0.1 || frequency > 15000) errors.frequency = 'pick a frequency between 0.1 to 15,000'
@@ -27,15 +29,15 @@ useEffect(()=>{
 
     dispatch(getTreatmentsOfTrial(+trialId))
     
-
-},[frequency, time, dispatch])
-
+  },[frequency, time, dispatch])
+  
+  
 const handleSubmit = async (e) => {
     e.preventDefault();
     setErrRender(true)
     
     // console.log('----------',validUrl)
-    const treatment = {
+      const treatment = {
       treatment_name: treatmentName,
       frequencies: `${frequency} ${time}`,
       comments,
@@ -44,9 +46,11 @@ const handleSubmit = async (e) => {
     };
    
     dispatch(createTreatmentThunk(treatment))
-    history.push('/')
+    setShowTreatment(true)
 }
 
+
+  
     return (
       <div className="Container">
         <div className="left">
@@ -82,14 +86,16 @@ const handleSubmit = async (e) => {
               onChange={(e) => setComments(e.target.value)}
               name="frequency"
             />
-            Time
-            <button type='submit' onClick={handleSubmit}>Submit</button>
+            Comments
+            <button type="submit" onClick={handleSubmit}>
+              Submit
+            </button>
+            
+            
           </form>
         </div>
-        <div className="right">
-          <button className="controls">Play / pause</button>
-          <button className="controls">Stop</button>
-        </div>
+        
+                
       </div>
     );
 }

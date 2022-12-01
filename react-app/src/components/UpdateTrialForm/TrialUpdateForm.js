@@ -7,7 +7,7 @@ import './update-trial.css'
 
 
 const TrialUpdateForm = ({trial}) => {
-   console.log('SHOW ME TRIAL IN TRIAL UPDATE FORM', trial)
+   console.log('SHOW ME TRIAL IN TRIAL UPDATE FORM', +trial.id)
     const [subject, setSubject] = useState(trial.subject);
     const [description, setDescription] = useState(trial.description);
     const [scope, setScope] = useState(trial.trial_scope);
@@ -34,6 +34,7 @@ const TrialUpdateForm = ({trial}) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setRenderErr(true)
+    console.log('hitting submit')
     const newTrial = {
       trialId: trial.id,
       subject,
@@ -53,9 +54,9 @@ const TrialUpdateForm = ({trial}) => {
 
 const delTrial = async (e) => {
   e.preventDefault();
-  await dispatch(deleteTrialThunk(trial.trialId))
+  await dispatch(deleteTrialThunk(trial.id))
   dispatch(fetchUserTrials())
-  
+  history.push('/summery')
 }
 
   // if (!trial) return null
@@ -108,7 +109,7 @@ const delTrial = async (e) => {
           rows="10"
           id="description"
         ></textarea>
-        <button id="update-btn" type="submit" disabled={!!error}>
+        <button id="update-btn" type="submit">
           Submit Edited Trial
         </button>
         <button id="update-btn" onClick={delTrial}>

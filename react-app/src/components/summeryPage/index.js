@@ -1,24 +1,37 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { NavLink, useHistory } from 'react-router-dom'
-import { getTreatmentsOfTrial, getAllTreatments } from '../../store/treatments'
+import { NavLink, useHistory , Redirect} from 'react-router-dom'
+import { getAllTreatments } from '../../store/treatments'
 
 import { fetchUserTrials } from '../../store/trials'
 import TrialUpdateModal from '../TrialModal' 
 
 
-
 const SummeryPage = () => {
   const dispatch = useDispatch()
   const history = useHistory()
-    
+  
+  
+  let state = useSelector(state=>state)
+  let currentUser = state.session.user
+  let trialsOfUser = state.trials.trials
+  let treatments = state.treatments.treatments
+  
+  console.log('SHOW ME TREATMENTS OBN SUMMERY PAGE' , treatments)
+  
+  function filterTreatments (trialId) {
+    let result = []
+   if (treatments) {
+        result = Object.values(treatments).filter(treatment=>treatment.trial_id === trialId)
+   }
+   return result
+  }
+   
+  const treatmentControlCenterRedirect = (treatmentId) => {
+    history.push(`/treatments/freq/${treatmentId}`)
+  }
 
-    let state = useSelector(state=>state)
-    let currentUser = state.session.user
-    let trialsOfUser = state.trials.trials
-    
-    
-    
+
     useEffect(() => {
       dispatch(fetchUserTrials());
       dispatch(getAllTreatments())
@@ -29,6 +42,7 @@ const SummeryPage = () => {
 
 
 if (!trialsOfUser) return null
+if (!currentUser)  return <Redirect to='/' />
 else
     return (
       <>
@@ -76,7 +90,23 @@ else
                         details:
                         {trial.description}
                       </div>
-                      
+                      {filterTreatments(trial.id).map(treatment => {
+                        return (
+                          <>
+                            <div>{treatment.treatment_name}</div>
+                            <div>
+                              {treatment.frequencies.map((freq) => (
+                                <div>
+                                  frequencies:
+                                  <li>{freq.freq}</li>
+                                </div>
+                              ))}
+                            </div>
+                            <div>{treatment.comments}</div>
+                            <button onClick={()=>treatmentControlCenterRedirect(treatment.id)}>frequencies control center</button>
+                          </>
+                        );
+                      })}
                                       
                     </div>
                   </div>

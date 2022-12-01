@@ -53,10 +53,10 @@ const NavBar = ({loaded}) => {
 
 return (
   <>
-    <div className="navbar-container">
+    <nav id='header'>
       <img src={logo} alt="logo" />
       <div id="header">{loaded && sessionLinks}</div>
-    </div>
+    </nav>
   </>
 );
 }

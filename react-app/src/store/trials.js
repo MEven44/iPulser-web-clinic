@@ -32,10 +32,10 @@ const loadOneTrial = (trial) => {
   };
 };
 
-const deleteTrial = (trial) => {
+const deleteTrial = (trialId) => {
   return {
     type: DELETE_TRIALS,
-    trial,
+    trialId,
   };
 };
 
@@ -97,14 +97,14 @@ export const updateTrialThunk = (update) => async (dispatch) => {
 
 
 // NOTE delete a trial
-export const deleteTrialThunk = (trial) => async (dispatch) => {
+export const deleteTrialThunk = (trialId) => async (dispatch) => {
   
-  const response = await fetch(`/api/@me/${trial.id}`, {
+  const response = await fetch(`/api/trials/@me/${trialId}`, {
     method: "DELETE",
   });
   if (response.ok) {
     const deleted = await response.json();
-    dispatch(deleteTrial(trial.Id));
+    dispatch(deleteTrial(trialId));
     return deleted;
   }
 };
@@ -115,6 +115,7 @@ export const getOneTrial = (trialId) => async (dispatch) => {
   const response = await fetch(`/api/trials/@me/${trialId}`);
 
   if (response.ok) {
+    console.log('DELETE THUNK', trialId)
     const trial = await response.json();
     // console.log('get server details thunk >>>>>>', server)
     dispatch(loadOneTrial (trial));
@@ -147,6 +148,7 @@ export const trialsReducer = (state = initialState, action) => {
 
     case DELETE_TRIALS: {
         const newState = {...state}
+        console.log("HITTING THE REDUCER FOR DELETE A TRIAL")
         return newState;
     }
 
