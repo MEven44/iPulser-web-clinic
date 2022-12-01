@@ -20,8 +20,13 @@ def get_all_treatments():
 @treatments_routes.route('/<int:trialId>')
 @login_required
 def get_trial_treatments(trialId):
-    treatments = Treatment.query.filter_by(trial_id=trialId)
-    treatments_list = [treatment.trt_to_dict() for treatment in treatments]
+    # treatments = Treatment.query.filter_by(trial_id=trialId)
+    # treatments_list = [treatment.trt_to_dict() for treatment in treatments]
+    treatments = Treatment.query.all()
+    treatments_list = []
+    for treatment in treatments:
+        if treatment['trial_id'] == trialId:
+            treatments_list.append(treatment)
     
     return {'treatments': treatments_list}, 200
 

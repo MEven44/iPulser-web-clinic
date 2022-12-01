@@ -37,8 +37,23 @@ button:hover {
 
 #a-nav {
     text-decoration: none;
-    color: white;
+    color:white;
+    height: 9vh;
 }
+
+#a-nav:hover {
+    background-color:white;
+    color: #fa6d01;
+  
+
+}
+
+img {
+    max-width: 24vw;
+    max-height: 12vh;
+    margin: 1%;
+}
+
 .login-container {
     display: flex;
     flex-direction: row;
@@ -57,6 +72,8 @@ nav {
     flex-direction: row;
     
 }
+    
+
 .navbar-container {
     display: flex;
     flex-direction: row;

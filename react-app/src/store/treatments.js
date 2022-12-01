@@ -87,11 +87,11 @@ export const createTreatmentThunk = (treatment) => async (dispatch) => {
 };
 
 // NOTE update a treatment
-export const updateTreatmentThunk = (update) => async (dispatch) => {
-  const response = await fetch(`/api/treatments${update.trialId}/${update.id}`, {
+export const updateTreatmentThunk = (id) => async (dispatch) => {
+  const response = await fetch(`/api/treatments/freq/${id}`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(update),
+    body: JSON.stringify(response),
   });
 
   if (response.ok) {

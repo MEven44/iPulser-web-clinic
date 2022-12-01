@@ -43,7 +43,7 @@ const TrialDetails = () => {
     if (data.errors) {
         setError(data.errors)
     } else {
-        history.push(`/`);
+        history.push(`/summery`);
   };
 }
 
