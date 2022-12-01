@@ -9,6 +9,7 @@ import ProtectedRoute from './components/auth/ProtectedRoute';
 import SummeryPage from './components/summeryPage'
 import { authenticate } from './store/session';
 import Treatments from './components/TreatmentInput';
+import Welcome from './components/summeryPage/WelcomePage';
 
 
 function App() {
@@ -49,7 +50,9 @@ function App() {
             <SummeryPage />
           </Route>
 
-          <Route path="/" exact={true}></Route>
+          <Route path="/" exact={true}>
+            <Welcome />
+          </Route>
         </Switch>
       )}
     </BrowserRouter>

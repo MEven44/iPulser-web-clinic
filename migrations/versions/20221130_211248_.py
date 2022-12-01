@@ -7,7 +7,9 @@ Create Date: 2022-11-30 21:12:48.802741
 """
 from alembic import op
 import sqlalchemy as sa
-
+import os
+environment = os.getenv('FLASK_ENV')
+SCHEMA = os.environ.get('SCHEMA')
 
 # revision identifiers, used by Alembic.
 revision = 'f873e9727d61'
@@ -24,6 +26,8 @@ def upgrade():
     sa.Column('time', sa.String(), nullable=False),
     sa.PrimaryKeyConstraint('id')
     )
+    if environment == 'production':
+        op.execute(f'ALTER TABLE frequencies SET SCHEMA {SCHEMA}')
     op.create_table('users',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('name', sa.String(length=40), nullable=False),
@@ -34,6 +38,8 @@ def upgrade():
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('email')
     )
+    if environment == 'production':
+        op.execute(f'ALTER TABLE users SET SCHEMA {SCHEMA}')
     op.create_table('trials',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('subject', sa.String(), nullable=False),
@@ -46,6 +52,8 @@ def upgrade():
     sa.ForeignKeyConstraint(['trial_manager'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
+    if environment == 'production':
+        op.execute(f'ALTER TABLE trials SET SCHEMA {SCHEMA}')
     op.create_table('treatments',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('treatment_name', sa.String(length=100), nullable=False),
@@ -59,6 +67,8 @@ def upgrade():
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
+    if environment == 'production':
+        op.execute(f'ALTER TABLE treatments SET SCHEMA {SCHEMA}')
     op.create_table('frequencies_treatments',
     sa.Column('treatments_id', sa.Integer(), nullable=False),
     sa.Column('frequencies_id', sa.Integer(), nullable=False),
@@ -66,6 +76,8 @@ def upgrade():
     sa.ForeignKeyConstraint(['treatments_id'], ['treatments.id'], ),
     sa.PrimaryKeyConstraint('treatments_id', 'frequencies_id')
     )
+    if environment == 'production':
+        op.execute(f'ALTER TABLE frequencies_treatments SET SCHEMA {SCHEMA}')
     # ### end Alembic commands ###
 
 
