@@ -6,6 +6,14 @@ from .auth_routes import validation_errors_to_error_messages
 from flask import jsonify
 
 treatments_routes = Blueprint('treatments', __name__)
+#NOTE get all treatments
+
+@treatments_routes.route('/')
+def get_all_treatments():
+    treatments = Treatment.query.all()
+    treatments_list = [treatment.trt_to_dict() for treatment in treatments]
+
+    return {'treatments': treatments_list}, 200
 
 # NOTE GET treatments by trial
 

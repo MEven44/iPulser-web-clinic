@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { NavLink, useHistory } from 'react-router-dom'
+import { getTreatmentsOfTrial } from '../../store/treatments'
 
 import { fetchUserTrials } from '../../store/trials'
 import TrialUpdateModal from '../TrialModal' 
@@ -15,12 +16,15 @@ const SummeryPage = () => {
     let state = useSelector(state=>state)
     let currentUser = state.session.user
     let trialsOfUser = state.trials.trials
+    let treatments = state.treatments.treatments
+    console.log('SUMMERY PAGE TRATMENTS', treatments)
     
     useEffect(() => {
       dispatch(fetchUserTrials());
+      
     }, [dispatch]);
  
-   
+   const [trialSummery, setTrialSummery] = useState(false)
     
 
 
@@ -49,10 +53,38 @@ else
                       treatment controls
                     </NavLink>
                   </button>
+                  <button onClick={() => setTrialSummery(true)}>
+                    Trial Summery
+                  </button>
                 </div>
+                {trialSummery && (
+                  <div className="trial-summery">
+                    <div className="title">
+                      <h2>{trial.subject}</h2>
+                      <div onClick={() => setTrialSummery(false)}>X</div>
+                    </div>
+                    <div className="trial-content">
+                      <div>
+                        initiated at:
+                        {trial.created_at.slice(0, 17)}
+                      </div>
+                      <div>
+                        Scope:
+                        {trial.trial_scope}
+                      </div>
+                      <div>
+                        details:
+                        {trial.description}
+                      </div>
+
+                     
+                    </div>
+                  </div>
+                )}
               </>
             );})}        
         </div>
+        
       </>
     );
 }

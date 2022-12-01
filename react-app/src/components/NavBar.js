@@ -44,7 +44,7 @@ const NavBar = ({loaded}) => {
           exact={true}
           activeClassName="active"
         >
-          Login - Sign Up
+          Clinicians Login
         </NavLink>
        </button>
     </>
