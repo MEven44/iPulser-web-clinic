@@ -87,17 +87,20 @@ export const createTreatmentThunk = (treatment) => async (dispatch) => {
 };
 
 // NOTE update a treatment
-export const updateTreatmentThunk = (id) => async (dispatch) => {
+export const updateTreatmentThunk = (updated, id) => async (dispatch) => {
   const response = await fetch(`/api/treatments/freq/${id}`, {
+    
     method: "PUT",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(response),
+    body: JSON.stringify(updated),
   });
-
+console.log("TREATMENT REDUCER THUNK UPDATE", updated);
   if (response.ok) {
-    const updated = await response.json();
-    dispatch(updateTreatment(updated));
-    return updated;
+
+    const updatedTreatment = await response.json();
+    console.log("TREATMENT REDUCER ****************** second", updatedTreatment);
+    dispatch(updateTreatment(updatedTreatment));
+    return updateTreatment;
   } else if (response.status < 500) {
     const data = await response.json();
     if (data.errors) {
@@ -107,13 +110,13 @@ export const updateTreatmentThunk = (id) => async (dispatch) => {
 };
 
 // NOTE delete a treatment
-export const deleteTrialThunk = (treatment) => async (dispatch) => {
-  const response = await fetch(`/api/treatments/${treatment.trialId}/${treatment.id}`, {
+export const deleteTreatmentThunk = (id) => async (dispatch) => {
+  const response = await fetch(`/api/treatments/${id}`, {
     method: "DELETE",
   });
   if (response.ok) {
     const deleted = await response.json();
-    dispatch(deleteTreatment(treatment.trialId));
+    dispatch(deleteTreatment(id));
     return deleted;
   }
 };
@@ -148,14 +151,18 @@ export const treatmentsReducer = (state = initialState, action) => {
     }
 
     case UPDATE_TREATMENT: {
-      const newState = { ...state.treatments, [action.treatment.id]: action.treatment };
+      console.log("REDUCER UPDATE", action);
+      
+      const newState = { ...state.treatments};
+      newState[action.treatment.id] = action.treatment
+      console.log('NEW STATE', newState)
       return newState;
     }
 
     case ALL_TREATMENTS: {
       const newState = { ...state};
       let obj = {};
-      console.log('REDUCER ALL TREATMENTS',action)
+     
       action.treatments.treatments.forEach((treatment) => {
         obj[treatment.id] = treatment;
       });

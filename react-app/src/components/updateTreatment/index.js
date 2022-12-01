@@ -1,9 +1,10 @@
 import React, { useEffect } from "react";
 import {useState} from 'react'
-import {useParams} from 'react-router-dom'
+import {useParams, useHistory} from 'react-router-dom'
 import {useDispatch, useSelector} from 'react-redux'
 
 import { fetchUserTrials } from '../../store/trials'
+import { deleteTreatmentThunk, getAllTreatments, updateTreatmentThunk } from "../../store/treatments";
 
 
 
@@ -11,41 +12,69 @@ function UpdateTreatment () {
    let {id} = useParams()
    id = +id
    const state = useSelector(state=>state)
-   const treatment = Object.values(state.treatments.treatments).filter(ct=>ct.id === id)
+    const history = useHistory()
+   let treatment;
+   if (state.treatments.treatments) treatment = Object.values(state?.treatments?.treatments).filter(ct=>ct.id === id)
 
-   console.log('SHOW ME TREATMENTS', treatment)
-   const trials = Object.values(state.trials)
-   console.log('SHOW ME TRIALS', trials[0] )
+   let trials;
+   if (state.trials.trials) trials = Object.values(state?.trials?.trials)
+  
+
+   const dispatch = useDispatch()
+   
+   useEffect(() => {
+     (async () => {
+       await dispatch(fetchUserTrials());
+       await dispatch(getAllTreatments());
+      
+     })();
+   }, [dispatch]);
 
 
-const [frequency, setFrequency] = useState(treatment[0].frequencies[0].freq);
-const [treatmentName, setTreatmentName] = useState(treatment.treatment_name);
-const [comments, setComments] = useState(treatment.comments);
-const [time, setTime] = useState(treatment[0].frequencies[0].time);
+const [frequency, setFrequency] = useState(treatment? treatment[0]?.frequencies[0]?.freq: "" );
+const [treatmentName, setTreatmentName] = useState(treatment? treatment[0]?.treatment_name: "");
+const [comments, setComments] = useState(treatment? treatment[0]?.comments: "");
+const [time, setTime] = useState(treatment? treatment[0]?.frequencies[0]?.time: "");
+
+const [trial, setTrial] = useState()
 const [errors, setErrors] = useState({});
 const [errRender, setErrRender] = useState(false);
+const [success, setSuccess] = useState(false)
 
-const dispatch = useDispatch()
-useEffect(() => {
-dispatch(fetchUserTrials())
-}, [dispatch]); 
 
 const handleSubmit = (e) => {
     e.preventDefault()
- 
-
-const treatment = {
+    const treatment = {
+    //   id: id,
       treatment_name: treatmentName,
       frequencies: `${frequency} ${time}`,
       comments,
-    //   trialId:+trialId
+      trialId: trial
     }
-    dispatch(UpdateTreatment(treatment))
+    dispatch(updateTreatmentThunk(treatment,id))
+    history.push('/summery')
 }
+
+const delTrt = async (e) => {
+    e.preventDefault();
+    await dispatch(deleteTreatmentThunk(id))
+}
+
+
+if (!treatment) return null
+else
 
 return (
   <>
-    <form>
+    <form onSubmit={handleSubmit}>
+      <label for="freq">Treatments Name</label>
+      <input
+        type="text"
+        className="input-treatment"
+        value={treatmentName}
+        onChange={(e) => setTreatmentName(e.target.value)}
+        name="name"
+      />
       <label for="freq">Frequency</label>
       <input
         type="text"
@@ -74,15 +103,20 @@ return (
       />
 
       <label for="select-trial">Choose a trial</label>
-      <select name="trials" id="trials-select">
+      <select
+        name="trials"
+        id="trials-select"
+        onChange={(e) => setTrial(e.target.value)}
+      >
         {" "}
-        <option value=''>Please choose a trial</option>
+        <option value="">Please choose a trial</option>
         {trials.map((trial) => (
           <option value={trial.id}>{trial.subject}</option>
         ))}
       </select>
-      <button>Update</button>
-      <button>delete</button>
+      <button type="submit">Update</button>
+      <button onClick={delTrt}>delete</button>
+      {success && (<div>You successfully updated the treatment</div>)}
     </form>
   </>
 );
