@@ -27,7 +27,9 @@ const SummeryPage = () => {
    return result
   }
    
-  
+  const treatmentControlCenterRedirect = (treatmentId) => {
+    history.push(`/treatments/freq/${treatmentId}`)
+  }
 
 
     useEffect(() => {
@@ -101,7 +103,7 @@ else
                               ))}
                             </div>
                             <div>{treatment.comments}</div>
-                            <button>frequencies control center</button>
+                            <button onClick={()=>treatmentControlCenterRedirect(treatment.id)}>frequencies control center</button>
                           </>
                         );
                       })}
