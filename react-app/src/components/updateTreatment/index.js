@@ -5,7 +5,7 @@ import {useDispatch, useSelector} from 'react-redux'
 
 import { fetchUserTrials } from '../../store/trials'
 import { deleteTreatmentThunk, getAllTreatments, updateTreatmentThunk } from "../../store/treatments";
-
+import './update-treatment.css'
 
 
 function UpdateTreatment () {
@@ -52,12 +52,14 @@ const handleSubmit = (e) => {
       trialId: trial
     }
     dispatch(updateTreatmentThunk(treatment,id))
+    dispatch(getAllTreatments());
     history.push('/summery')
 }
 
 const delTrt =  (e) => {
     e.preventDefault();
     dispatch(deleteTreatmentThunk(id))
+    dispatch(getAllTreatments())
     history.push('/summery')
 }
 
@@ -67,7 +69,7 @@ else
 
 return (
   <>
-    <form onSubmit={handleSubmit}>
+    <form className='form' onSubmit={handleSubmit}>
       <label for="freq">Treatments Name</label>
       <input
         type="text"
@@ -75,6 +77,7 @@ return (
         value={treatmentName}
         onChange={(e) => setTreatmentName(e.target.value)}
         name="name"
+        required={true}
       />
       <label for="freq">Frequency</label>
       <input
@@ -83,6 +86,7 @@ return (
         value={frequency}
         onChange={(e) => setFrequency(e.target.value)}
         name="frequency"
+        required={true}
       />
 
       <label for="time">Time</label>
@@ -92,6 +96,7 @@ return (
         value={time}
         onChange={(e) => setTime(e.target.value)}
         name="frequency"
+        required={true}
       />
 
       <label for="comments">Comments</label>

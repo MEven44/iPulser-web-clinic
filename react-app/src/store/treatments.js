@@ -111,9 +111,10 @@ export const updateTreatmentThunk = (updated, id) => async (dispatch) => {
 
 // NOTE delete a treatment
 export const deleteTreatmentThunk = (id) => async (dispatch) => {
-  const response = await fetch(`/api/treatments/${+id}`, {
+  const response = await fetch(`/api/treatments/${id}`, {
     method: "DELETE",
   });
+  console.log('DELETE', response)
   if (response.ok) {
     const deleted = await response.json();
     dispatch(deleteTreatment(id));

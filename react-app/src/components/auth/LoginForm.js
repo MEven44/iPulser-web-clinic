@@ -1,14 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { login } from '../../store/session';
 
 const LoginForm = () => {
-  const [errors, setErrors] = useState([]);
+  let [errors, setErrors] = useState({});
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [renderErr,setRenderErr] = useState(false)
   const user = useSelector(state => state.session.user);
   const dispatch = useDispatch();
+
+  useEffect(()=>{
+    const valErr = {}
+    if (email.length && !validateEmail(email)) valErr.email ='invalid email'
+    else if (!email.length) valErr.emailErr = 'email is required'
+    if (!password) valErr.passwordErr= 'password required'
+    errors = valErr
+  },[email, password])
 
   const onLogin = async (e) => {
     e.preventDefault();
@@ -20,6 +29,7 @@ const LoginForm = () => {
 
   const demoUser = async (e) => {
     e.preventDefault()
+    renderErr(true)
     const data = await dispatch(login("demo@aa.io", "password"))
     if (data) {
       setErrors(data)
@@ -27,6 +37,10 @@ const LoginForm = () => {
       <Redirect to='/summery' />
     }
   }
+
+  const validateEmail = (email) => {
+    return /\S+@\S+\.\S+/.test(email);
+  };
 
   const updateEmail = (e) => {
     setEmail(e.target.value);
@@ -44,12 +58,24 @@ const LoginForm = () => {
     <form onSubmit={onLogin} className="login">
       <h2 className="login-title">Login</h2>
       <div>
-        {errors.map((error, ind) => (
-          <div key={ind}>{error}</div>
+        {Object.values(errors).map((error, ind) => (
+          <div id="errors" key={ind}>
+            {error}
+          </div>
         ))}
       </div>
       <div>
-        <label htmlFor="email">Email</label>
+        <div>
+          {renderErr && errors.emailErr ? (
+            <label className="text renderError" htmlFor="email">
+              Email: {errors.emailErr}
+            </label>
+          ) : (
+            <label className="text noRenderError" htmlFor="email">
+              Email
+            </label>
+          )}
+        </div>
         <input
           name="email"
           type="text"
@@ -59,7 +85,17 @@ const LoginForm = () => {
         />
       </div>
       <div>
-        <label htmlFor="password">Password</label>
+        <div>
+          {renderErr && errors.passwordErr ? (
+            <label className="text renderError" htmlFor="email">
+              Password: {errors.passwordErr}
+            </label>
+          ) : (
+            <label className="text noRenderError" htmlFor="email">
+              Password
+            </label>
+          )}
+        </div>
         <input
           name="password"
           type="password"
@@ -68,7 +104,9 @@ const LoginForm = () => {
           onChange={updatePassword}
         />
       </div>
-      <button type="submit">Login</button>
+      <button type="submit">
+        Login
+      </button>
       <button onClick={demoUser}>Demo User</button>
     </form>
   );
