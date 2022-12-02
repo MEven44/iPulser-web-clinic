@@ -3,7 +3,7 @@ import { useState, useEffect} from 'react'
 import {useSelector, useDispatch} from 'react-redux'
 import { useParams, useHistory} from 'react-router-dom'
 import { createTreatmentThunk, getTreatmentsOfTrial, updateTreatmentThunk } from '../../store/treatments'
-
+import './treatments.css'
 
 
 
@@ -53,49 +53,49 @@ const handleSubmit = async (e) => {
   
     return (
       <div className="Container">
-        <div className="left">
-          <form>
+        
+          <form className="left">
+            <label> Treatment Name</label>
             <input
               type="text"
               className="input-treatment"
               value={treatmentName}
               onChange={(e) => setTreatmentName(e.target.value)}
-              name="frequency"
+              name="name"
+              placeholder="Treatment name"
             />
-            Treatment Name
+            <label>Frequency</label>
             <input
               type="text"
               className="input-treatment"
               value={frequency}
               onChange={(e) => setFrequency(e.target.value)}
               name="frequency"
+              placeholder="Enter a number between 0.5 to 15,000"
             />
-            frequency
+            <label>Time</label>
             <input
               type="text"
               className="input-treatment"
               value={time}
               onChange={(e) => setTime(e.target.value)}
-              name="frequency"
+              name="time"
+              placeholder="time in minutes (1-15)"
             />
-            Time
+            <label> Comments</label>
             <textarea
               type="text"
               className="input-treatment"
               value={comments}
               onChange={(e) => setComments(e.target.value)}
-              name="frequency"
+              name="comments"
             />
             Comments
             <button type="submit" onClick={handleSubmit}>
               Submit
             </button>
-            
-            
           </form>
-        </div>
-        
-                
+       
       </div>
     );
 }

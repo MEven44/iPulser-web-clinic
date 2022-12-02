@@ -1,0 +1,15 @@
+#welcome-video {
+    width: 54%;
+    display: flex;
+    margin: 1%;
+}
+
+
+#general {
+    display: flex;
+    /* text-align: center; */
+    flex-direction: column;
+    align-items: center;
+    background-color: #106592;
+
+}

@@ -5,6 +5,7 @@ import { getAllTreatments } from '../../store/treatments'
 
 import { fetchUserTrials } from '../../store/trials'
 import TrialUpdateModal from '../TrialModal' 
+import './summery.css'
 
 
 const SummeryPage = () => {
@@ -49,9 +50,17 @@ else
         <h1>
           Welcome {currentUser.title} {currentUser.name}
         </h1>
-        <div className="trials conteiner">Trials:
+        <div className="trials-conteiner">
+          <h2>Trials:</h2>
+          <div className="general-buttons">
+            <div id="g-bttn" onClick={() => setTrialSummery(true)}>
+              Trials Details
+            </div>
+            <div id="g-bttn" onClick={() => setTrialSummery(false)}>
+              X minimize details
+            </div>
+          </div>
           {Object.values(trialsOfUser).map((trial) => {
-            
             return (
               <>
                 <div className="trial-name">
@@ -64,57 +73,56 @@ else
                       exact={true}
                       activeClassName="active"
                     >
-                      treatment controls
+                      Create a treatment
                     </NavLink>
-                  </button>
-                  <button onClick={() => setTrialSummery(true)}>
-                    Trial Summery
                   </button>
                 </div>
                 {trialSummery && (
                   <div className="trial-summery">
-                    <div className="title">
-                      <h2>{trial.subject}</h2>
-                      <div onClick={() => setTrialSummery(false)}>X</div>
-                    </div>
+                    <div className="title"></div>
                     <div className="trial-content">
-                      <div>
+                      <div id="content">
                         initiated at:
                         {trial.created_at.slice(0, 17)}
                       </div>
-                      <div>
+                      <div id="content">
                         Scope:
                         {trial.trial_scope}
                       </div>
-                      <div>
+                      <div id="content">
                         details:
                         {trial.description}
                       </div>
-                      {filterTreatments(trial.id).map(treatment => {
+                      {filterTreatments(trial.id).map((treatment) => {
                         return (
                           <>
-                            <div>{treatment.treatment_name}</div>
-                            <div>
+                            <div id="content">{treatment.treatment_name}</div>
+                            <div id="content">
                               {treatment.frequencies.map((freq) => (
-                                <div>
+                                <div id="content">
                                   frequencies:
                                   <li>{freq.freq}</li>
                                 </div>
                               ))}
                             </div>
-                            <div>{treatment.comments}</div>
-                            <button onClick={()=>treatmentControlCenterRedirect(treatment.id)}>frequencies control center</button>
+                            <div id="content">{treatment.comments}</div>
+                            <button
+                              onClick={() =>
+                                treatmentControlCenterRedirect(treatment.id)
+                              }
+                            >
+                              Change treatment
+                            </button>
                           </>
                         );
                       })}
-                                      
                     </div>
                   </div>
                 )}
               </>
-            );})}        
+            );
+          })}
         </div>
-        
       </>
     );
 }
