@@ -7,6 +7,7 @@ import '../../index.css'
 
 const SignUpForm = () => {
   const [errors, setErrors] = useState({});
+  const [backendErrors,setBackendErrors] = useState([])
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -17,9 +18,9 @@ const SignUpForm = () => {
   const user = useSelector(state => state.session.user);
   const dispatch = useDispatch();
 
-  const validateEmail = (email) => {
-    return /\S+@\S+\.\S+/.test(email);
-  };
+  // const validateEmail = (email) => {
+  //   return /\S+@\S+\.\S+/.test(email);
+  // };
 
   const onSignUp = async (e) => {
     e.preventDefault();
@@ -27,7 +28,7 @@ const SignUpForm = () => {
     if (password === repeatPassword) {
       const data = await dispatch(signUp(username, title, speciality, email, password));
       if (data) {
-        setErrors(data)
+        setBackendErrors(data)
       }
     }
   };
@@ -37,7 +38,7 @@ const SignUpForm = () => {
     if (!username) errVal.usernameErr = 'You must have a user name'
     
     if (!email) errVal.emailErr = 'You must enter an email'
-
+    // if (validateEmail(email)) errVal.emailErr = 'Your email is invalid'
     if (password && password !== repeatPassword) errVal.passwordErr = 'your password not match'
     else if (!password) errVal.passwordErr = ' you must enter a password'
 
@@ -62,12 +63,12 @@ const SignUpForm = () => {
   if (user) {
     return <Redirect to='/summery' />;
   }
-console.log('ERRORS SIGNUP', errors)
+console.log('ERRORS SIGNUP', backendErrors)
   return (
     <form onSubmit={onSignUp} className="login">
       <h2 className="login-title">signup</h2>
       <div id="errors">
-        {Object.values(errors).map((error, ind) => (
+        {backendErrors.map((error, ind) => (
           <div key={ind}>{error}</div>
         ))}
       </div>
