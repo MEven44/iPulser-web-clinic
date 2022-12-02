@@ -43,13 +43,14 @@ const TrialUpdateForm = ({trial}) => {
       
       };
     
-    const data = await dispatch(updateTrialThunk(newTrial));
+    let data = await dispatch(updateTrialThunk(newTrial));
     
-    // if (data.errors) {
-    //     setError(data.errors)
-    // } else {
-        history.push(`/summery`);
-  // };
+    if (data.errors) {
+        setError(data.errors)
+    } else {
+        dispatch(fetchUserTrials());
+        history.push('/summery')
+    }
 }
 
 const delTrial = async (e) => {
@@ -67,7 +68,7 @@ const delTrial = async (e) => {
 
       <form className="form-con" onSubmit={handleSubmit}>
         {renderErr && error.subjectErr ? (
-          <label id='errors' htmlFor="name">
+          <label id="errors" htmlFor="name">
             Trial subject: {error.subjectErr}
           </label>
         ) : (
@@ -82,6 +83,7 @@ const delTrial = async (e) => {
           placeholder="Trial Subject"
           name="subject"
           id="input"
+          required={true}
         />
         <label className="text noRenderError" htmlFor="name">
           Trial Scope
@@ -93,15 +95,14 @@ const delTrial = async (e) => {
           placeholder="Describe the trial scope"
           name="scope"
           id="input"
+          required={true}
         />
         {renderErr && error.desErr ? (
           <label id="errors" htmlFor="des">
             Description: {error.desErr}
           </label>
         ) : (
-          <label  htmlFor="des">
-            Description
-          </label>
+          <label htmlFor="des">Description</label>
         )}
         <textarea
           value={description}
@@ -110,6 +111,7 @@ const delTrial = async (e) => {
           placeholder="Describe the trial details"
           rows="10"
           id="description"
+          required={true}
         ></textarea>
         <button id="update-btn" type="submit">
           Submit Edited Trial

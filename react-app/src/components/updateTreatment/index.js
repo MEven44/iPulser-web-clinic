@@ -77,6 +77,7 @@ return (
         value={treatmentName}
         onChange={(e) => setTreatmentName(e.target.value)}
         name="name"
+        required={true}
       />
       <label for="freq">Frequency</label>
       <input
@@ -85,6 +86,7 @@ return (
         value={frequency}
         onChange={(e) => setFrequency(e.target.value)}
         name="frequency"
+        required={true}
       />
 
       <label for="time">Time</label>
@@ -94,6 +96,7 @@ return (
         value={time}
         onChange={(e) => setTime(e.target.value)}
         name="frequency"
+        required={true}
       />
 
       <label for="comments">Comments</label>
