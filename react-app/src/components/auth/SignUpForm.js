@@ -68,11 +68,11 @@ const SignUpForm = () => {
         <label>Title</label>
         <select
           name="Title"
-          id='select-title'
+          id='select'
           onChange={(e)=>setTitle(e.target.value)}
           value={title}
         ><option value=''>Select title</option>
-        <option value='none'>Autodeduct</option>
+        <option value='Autodeduct'>Autodeduct</option>
         <option value='phd'>Ph.d</option>
         <option value='M.D'>M.D</option>
         <option value='nurse'>Nurse</option>
