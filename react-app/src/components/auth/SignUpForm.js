@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
 import { Redirect } from 'react-router-dom';
 import { signUp } from '../../store/session';
@@ -6,18 +6,24 @@ import '../../index.css'
 
 
 const SignUpForm = () => {
-  const [errors, setErrors] = useState([]);
+  const [errors, setErrors] = useState({});
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [repeatPassword, setRepeatPassword] = useState('');
   const [title, setTitle]=useState('')
   const [speciality,setSpeciality]=useState('')
+  const [renderErr,setRenderErr]=useState(false)
   const user = useSelector(state => state.session.user);
   const dispatch = useDispatch();
 
+  const validateEmail = (email) => {
+    return /\S+@\S+\.\S+/.test(email);
+  };
+
   const onSignUp = async (e) => {
     e.preventDefault();
+    if (errors) setRenderErr(true)
     if (password === repeatPassword) {
       const data = await dispatch(signUp(username, title, speciality, email, password));
       if (data) {
@@ -26,6 +32,17 @@ const SignUpForm = () => {
     }
   };
 
+  useEffect(()=>{
+    let errVal = {}
+    if (!username) errVal.usernameErr = 'You must have a user name'
+    
+    if (!email) errVal.emailErr = 'You must enter an email'
+
+    if (password && password !== repeatPassword) errVal.passwordErr = 'your password not match'
+    else if (!password) errVal.passwordErr = ' you must enter a password'
+
+    setErrors(errVal)
+  },[username, email, password, repeatPassword])
   const updateUsername = (e) => {
     setUsername(e.target.value);
   };
@@ -45,17 +62,25 @@ const SignUpForm = () => {
   if (user) {
     return <Redirect to='/summery' />;
   }
-
+console.log('ERRORS SIGNUP', errors)
   return (
-    <form onSubmit={onSignUp} className='login'>
-    <h2 className='login-title'>signup</h2>
-      <div id='errors'>
-        {errors.map((error, ind) => (
+    <form onSubmit={onSignUp} className="login">
+      <h2 className="login-title">signup</h2>
+      <div id="errors">
+        {Object.values(errors).map((error, ind) => (
           <div key={ind}>{error}</div>
         ))}
       </div>
       <div>
-        <label>Name</label>
+        {renderErr && errors.usernameErr ? (
+          <label id="errors" htmlFor="email">
+            Name: {errors.usernameErr}
+          </label>
+        ) : (
+          <label className="text noRenderError" htmlFor="email">
+            Name
+          </label>
+        )}
         <input
           type="text"
           name="username"
@@ -68,15 +93,16 @@ const SignUpForm = () => {
         <label>Title</label>
         <select
           name="Title"
-          id='select'
-          onChange={(e)=>setTitle(e.target.value)}
+          id="select"
+          onChange={(e) => setTitle(e.target.value)}
           value={title}
-        ><option value=''>Select title</option>
-        <option value='Autodeduct'>Autodeduct</option>
-        <option value='phd'>Ph.d</option>
-        <option value='M.D'>M.D</option>
-        <option value='nurse'>Nurse</option>
-        <option value='studeny'>Student</option>
+        >
+          <option value="">Select title</option>
+          <option value="Autodeduct">Autodeduct</option>
+          <option value="phd">Ph.d</option>
+          <option value="M.D">M.D</option>
+          <option value="nurse">Nurse</option>
+          <option value="studeny">Student</option>
         </select>
       </div>
       <div>
@@ -84,13 +110,21 @@ const SignUpForm = () => {
         <input
           type="text"
           name="speciality"
-          onChange={e=>setSpeciality(e.target.value)}
+          onChange={(e) => setSpeciality(e.target.value)}
           value={speciality}
           required={true}
         ></input>
       </div>
       <div>
-        <label>Email</label>
+        {renderErr && errors.emailErr ? (
+          <label id="errors" htmlFor="email">
+            Email: {errors.emailErr}
+          </label>
+        ) : (
+          <label className="text noRenderError" htmlFor="email">
+            Email
+          </label>
+        )}
         <input
           type="text"
           name="email"
@@ -99,7 +133,15 @@ const SignUpForm = () => {
         ></input>
       </div>
       <div>
-        <label>Password</label>
+        {renderErr && errors.passwordErr ? (
+          <label id="errors" htmlFor="email">
+            Password: {errors.passwordErr}
+          </label>
+        ) : (
+          <label className="text noRenderError" htmlFor="email">
+            Password
+          </label>
+        )}
         <input
           type="password"
           name="password"
@@ -114,7 +156,7 @@ const SignUpForm = () => {
           name="repeat_password"
           onChange={updateRepeatPassword}
           value={repeatPassword}
-          required={true}
+          
         ></input>
       </div>
       <button type="submit">Sign Up</button>

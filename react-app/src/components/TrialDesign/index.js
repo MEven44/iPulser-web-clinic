@@ -2,7 +2,7 @@ import React from "react";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { createTrialThunk } from '../../store/trials'
+import { createTrialThunk, fetchUserTrials } from '../../store/trials'
 import './trial.css'
 
 
@@ -39,6 +39,7 @@ const TrialDetails = () => {
       };
     
     const data = await dispatch(createTrialThunk(newTrial));
+    dispatch(fetchUserTrials());
     // console.log('TRIAL FORM DATA', data)
     // if (data.errors) {
     //     setError(data.errors)
