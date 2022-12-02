@@ -11,7 +11,7 @@ class User(db.Model, UserMixin):
         __table_args__ = {'schema': SCHEMA}
 
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(40), nullable=False)
+    username = db.Column(db.String(40), nullable=False)
     title = db.Column(db.String(40), nullable=False)
     speciality = db.Column(db.String(100))
     email = db.Column(db.String(255), nullable=False, unique=True)
@@ -34,7 +34,7 @@ class User(db.Model, UserMixin):
     def to_dict(self):
         return {
             'id': self.id,
-            'name': self.name,
+            'name': self.username,
             'title': self.title,
             'speciality':self.speciality,
             'email': self.email

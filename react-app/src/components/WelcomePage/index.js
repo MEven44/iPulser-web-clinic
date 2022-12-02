@@ -1,21 +1,24 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
-
+import { useSelector } from "react-redux";
 import './welcome.css'
 
 
 function Welcome() {
   const history = useHistory()
-   let loginSignUp = () => {
-     history.push("/login-signup");
-   };
-
+  let loginSignUp = () => {
+    history.push("/login-signup");
+  };
+  
+  let currentUser = useSelector((state) => state.session.user);
 
   return (
     <div id="general">
-      <button onClick={loginSignUp}>
-        Clinicians Login <i class="fa-solid fa-door-open" />
-      </button>{" "}
+      {!currentUser &&
+        <button onClick={loginSignUp}>
+          Clinicians Login <i class="fa-solid fa-door-open" />
+        </button>
+      }
       <h1>Chronic pain is real</h1>
       <h2>WE CAN HELP</h2>
       <div id="welcome-video">
