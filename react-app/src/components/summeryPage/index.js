@@ -29,6 +29,7 @@ const SummeryPage = () => {
   }
    
   const treatmentControlCenterRedirect = (treatmentId) => {
+    dispatch(getAllTreatments());
     history.push(`/treatments/freq/${treatmentId}`)
   }
 
@@ -40,7 +41,9 @@ const SummeryPage = () => {
  
    const [trialSummery, setTrialSummery] = useState(false)
     
-
+const addTreatment =(id)=>{
+  history.push(`/treatments/${id}`)
+}
 
 if (!trialsOfUser) return null
 if (!currentUser)  return <Redirect to='/' />
@@ -66,15 +69,8 @@ else
                 <div className="trial-name">
                   {trial.subject}
                   <TrialUpdateModal trial={trial} />
-                  <button>
-                    <NavLink
-                      id="a-nav"
-                      to={`/treatments/${trial.id}`}
-                      exact={true}
-                      activeClassName="active"
-                    >
-                      Create a treatment
-                    </NavLink>
+                  <button onClick={()=>addTreatment(trial.id)}>
+                    Create a treatment
                   </button>
                 </div>
                 {trialSummery && (

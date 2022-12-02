@@ -23,11 +23,13 @@ const dispatch = useDispatch()
 let state = useSelector(state=>state)
 const recentTreatment = state.treatment
 const history = useHistory()
+
+
 useEffect(()=>{
     if (frequency < 0.1 || frequency > 15000) errors.frequency = 'pick a frequency between 0.1 to 15,000'
     if (time < 1 || time > 15) errors.time = 'choose the time in minutes between 1 to 15 minutes'
 
-    dispatch(getTreatmentsOfTrial(+trialId))
+    // dispatch(getTreatmentsOfTrial(+trialId))
     
   },[frequency, time, dispatch])
   
@@ -90,7 +92,7 @@ const handleSubmit = async (e) => {
               onChange={(e) => setComments(e.target.value)}
               name="comments"
             />
-            Comments
+           
             <button type="submit" onClick={handleSubmit}>
               Submit
             </button>
