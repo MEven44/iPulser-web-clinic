@@ -45,11 +45,11 @@ const TrialUpdateForm = ({trial}) => {
     
     const data = await dispatch(updateTrialThunk(newTrial));
     
-    if (data.errors) {
-        setError(data.errors)
-    } else {
+    // if (data.errors) {
+    //     setError(data.errors)
+    // } else {
         history.push(`/summery`);
-  };
+  // };
 }
 
 const delTrial = async (e) => {
@@ -67,8 +67,8 @@ const delTrial = async (e) => {
 
       <form className="form-con" onSubmit={handleSubmit}>
         {renderErr && error.subjectErr ? (
-          <label className="text renderError" htmlFor="name">
-            Trial subject: {error.nameError}
+          <label id='errors' htmlFor="name">
+            Trial subject: {error.subjectErr}
           </label>
         ) : (
           <label className="text noRenderError" htmlFor="name">
@@ -95,11 +95,11 @@ const delTrial = async (e) => {
           id="input"
         />
         {renderErr && error.desErr ? (
-          <label className="text renderError" htmlFor="name">
-            Description: {error.nameError}
+          <label id="errors" htmlFor="des">
+            Description: {error.desErr}
           </label>
         ) : (
-          <label className="text noRenderError" htmlFor="name">
+          <label  htmlFor="des">
             Description
           </label>
         )}
