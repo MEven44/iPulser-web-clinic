@@ -23,7 +23,7 @@ const SignUpForm = () => {
 
   const onSignUp = async (e) => {
     e.preventDefault();
-    if (errors) setRenderErr(true)
+    setRenderErr(true)
     if (password === repeatPassword) {
       const data = await dispatch(signUp(username, title, speciality, email, password));
       if (data) {
