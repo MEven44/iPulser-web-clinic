@@ -1,0 +1,19 @@
+
+.left {
+  
+    background-color: #106592;
+    display: flex;
+    flex-direction: column;
+    color: white;
+    padding: 5%;
+    max-width:50%;
+    max-height: 50%;
+}
+
+textarea {
+    border: none;
+    max-width: 50%;
+    height: 18vh;
+    margin-left: 2vw;
+    border-radius: 7px;
+}

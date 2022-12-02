@@ -77,4 +77,83 @@ nav {
     flex-direction: row;
 }
 
+.login {
+    display: flex;
+    flex-direction: column;
+    width: 23vw;
+    margin-left: 14vw;
+    background-color: #126d9e;
+    padding: 16%;
+    /* margin-top: 3%; */
+    /* color: white; */
+    /* margin-right: 0%; */
+    align-items: center;
+    max-height: 92vh;
+}
 
+.login-container {
+   
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: row;
+}
+
+
+input {
+    width: 24vw;
+    height: 6vh;
+    border: none;
+}
+
+.login-title {
+    margin-top: -37px;
+    color: #ea7925;
+    font-weight: bolder;
+}
+
+#select-title {
+    width: 24vw;
+    height: 6vh;
+    border: none;
+    border-radius: 3px;
+    margin-bottom: 2%;
+    margin-left: 5%;
+
+}
+#select-title select {
+background-color: #0563af;
+  color: white;
+  padding: 12px;
+  width: 250px;
+  border: none;
+  font-size: 20px;
+  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+  -webkit-appearance: button;
+  appearance: button;
+  outline: none;
+}
+
+#select-title::before {
+  content: "\f13a";
+  font-family: FontAwesome;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 20%;
+  height: 100%;
+  text-align: center;
+  font-size: 28px;
+  line-height: 45px;
+  color: rgba(255, 255, 255, 0.5);
+  background-color: rgba(255, 255, 255, 0.1);
+  pointer-events: none;
+}
+
+#select-title:hover::before {
+  color: rgba(255, 255, 255, 0.6);
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+#select-title select option {
+  padding: 30px;
+}

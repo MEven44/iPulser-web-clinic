@@ -11,7 +11,7 @@ import { authenticate } from './store/session';
 import Treatments from './components/TreatmentInput';
 import Welcome from './components/WelcomePage';
 import UpdateTreatment from './components/updateTreatment';
-
+import '../src/index.css'
 
 function App() {
   const [loaded, setLoaded] = useState(false);
@@ -32,11 +32,11 @@ function App() {
       {loaded && (
         <Switch>
           <Route path="/login-signup" exact={true}>
-            <div className="login-container">
-              <div className="login">
+            <div className='login-container'>
+              <div>
                 <LoginForm />
               </div>
-              <div className="signup">
+              <div>
                 <SignUpForm />
               </div>
             </div>

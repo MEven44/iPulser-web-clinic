@@ -1,0 +1,46 @@
+.trials-conteiner {
+    max-width: 70%;
+}
+
+.general-buttons {
+    display: flex;
+    flex-direction: row;
+}
+
+#g-bttn {
+    background-color: #106592;
+    color: #ea7925;
+    margin: 2%;
+    padding: 2%;
+}
+
+#g-bttn:hover {
+    background-color: #508aaa;
+}
+
+.trial-name {
+    display: flex;
+    border: 1px solid #106592;
+    margin: 2%;
+    padding: 2%;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.trial-summery {
+    background-color: #106592;
+    color: white;
+    display: flex;
+    margin-left: 2%;
+    margin-top: -2%;
+    max-width: 96%;
+
+}
+#content {
+    padding-top: 5%;
+    padding-left: 7%;
+    font-weight: lighter;
+    padding-bottom: 3%;
+
+   
+}

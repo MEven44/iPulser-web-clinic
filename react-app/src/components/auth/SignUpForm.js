@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
 import { Redirect } from 'react-router-dom';
 import { signUp } from '../../store/session';
+import '../../index.css'
+
 
 const SignUpForm = () => {
   const [errors, setErrors] = useState([]);
@@ -9,13 +11,15 @@ const SignUpForm = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [repeatPassword, setRepeatPassword] = useState('');
+  const [title, setTitle]=useState('')
+  const [speciality,setSpeciality]=useState('')
   const user = useSelector(state => state.session.user);
   const dispatch = useDispatch();
 
   const onSignUp = async (e) => {
     e.preventDefault();
     if (password === repeatPassword) {
-      const data = await dispatch(signUp(username, email, password));
+      const data = await dispatch(signUp(username, title, speciality, email, password));
       if (data) {
         setErrors(data)
       }
@@ -43,26 +47,53 @@ const SignUpForm = () => {
   }
 
   return (
-    <form onSubmit={onSignUp}>
-      <div>
+    <form onSubmit={onSignUp} className='login'>
+    <h2 className='login-title'>signup</h2>
+      <div id='errors'>
         {errors.map((error, ind) => (
           <div key={ind}>{error}</div>
         ))}
       </div>
       <div>
-        <label>User Name</label>
+        <label>Name</label>
         <input
-          type='text'
-          name='username'
+          type="text"
+          name="username"
           onChange={updateUsername}
           value={username}
+          required={true}
+        ></input>
+      </div>
+      <div>
+        <label>Title</label>
+        <select
+          name="Title"
+          id='select-title'
+          onChange={(e)=>setTitle(e.target.value)}
+          value={title}
+        ><option value=''>Select title</option>
+        <option value='none'>Autodeduct</option>
+        <option value='phd'>Ph.d</option>
+        <option value='M.D'>M.D</option>
+        <option value='nurse'>Nurse</option>
+        <option value='studeny'>Student</option>
+        </select>
+      </div>
+      <div>
+        <label>Speciality</label>
+        <input
+          type="text"
+          name="speciality"
+          onChange={e=>setSpeciality(e.target.value)}
+          value={speciality}
+          required={true}
         ></input>
       </div>
       <div>
         <label>Email</label>
         <input
-          type='text'
-          name='email'
+          type="text"
+          name="email"
           onChange={updateEmail}
           value={email}
         ></input>
@@ -70,8 +101,8 @@ const SignUpForm = () => {
       <div>
         <label>Password</label>
         <input
-          type='password'
-          name='password'
+          type="password"
+          name="password"
           onChange={updatePassword}
           value={password}
         ></input>
@@ -79,14 +110,14 @@ const SignUpForm = () => {
       <div>
         <label>Repeat Password</label>
         <input
-          type='password'
-          name='repeat_password'
+          type="password"
+          name="repeat_password"
           onChange={updateRepeatPassword}
           value={repeatPassword}
           required={true}
         ></input>
       </div>
-      <button type='submit'>Sign Up</button>
+      <button type="submit">Sign Up</button>
     </form>
   );
 };

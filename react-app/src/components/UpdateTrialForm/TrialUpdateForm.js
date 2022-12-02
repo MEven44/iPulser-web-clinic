@@ -65,7 +65,7 @@ const delTrial = async (e) => {
     <div id="form">
       <h1>Design the Trial</h1>
 
-      <form className = 'form-con' onSubmit={handleSubmit}>
+      <form className="form-con" onSubmit={handleSubmit}>
         {renderErr && error.subjectErr ? (
           <label className="text renderError" htmlFor="name">
             Trial subject: {error.nameError}
@@ -83,7 +83,9 @@ const delTrial = async (e) => {
           name="subject"
           id="input"
         />
-
+        <label className="text noRenderError" htmlFor="name">
+          Trial Scope
+        </label>
         <input
           type="text"
           onChange={(e) => setScope(e.target.value)}
