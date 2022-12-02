@@ -34,13 +34,27 @@
     margin-left: 2%;
     margin-top: -2%;
     max-width: 96%;
+}
+.trial-content {
 
+width:100%;
+}
+.trial-content > * {
+padding:5px;
 }
 #content {
-    padding-top: 5%;
-    padding-left: 7%;
-    font-weight: lighter;
-    padding-bottom: 3%;
+  list-style: none;  
+      
+}
 
-   
+.update-trt {
+display: flex;
+    align-items: center;
+}
+#trt-con {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    border-top: 1px solid #ea7925;
+    align-content: center;
 }

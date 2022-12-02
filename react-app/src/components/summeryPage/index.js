@@ -16,7 +16,7 @@ const SummeryPage = () => {
   let state = useSelector(state=>state)
   let currentUser = state.session.user
   let trialsOfUser = state.trials.trials
-  let treatments = state.treatments.treatments
+  let treatments = state.treatments?.treatments
   
   console.log('SHOW ME TREATMENTS OBN SUMMERY PAGE' , treatments)
   
@@ -29,7 +29,7 @@ const SummeryPage = () => {
   }
    
   const treatmentControlCenterRedirect = (treatmentId) => {
-    dispatch(getAllTreatments());
+    
     history.push(`/treatments/freq/${treatmentId}`)
   }
 
@@ -37,6 +37,7 @@ const SummeryPage = () => {
     useEffect(() => {
       dispatch(fetchUserTrials());
       dispatch(getAllTreatments())
+      
     }, [dispatch]);
  
    const [trialSummery, setTrialSummery] = useState(false)
@@ -78,38 +79,45 @@ else
                     <div className="title"></div>
                     <div className="trial-content">
                       <div id="content">
-                        initiated at:
+                        INITIATED AT:{' '}
                         {trial.created_at.slice(0, 17)}
                       </div>
                       <div id="content">
-                        Scope:
+                        SCOPE:{' '}
                         {trial.trial_scope}
                       </div>
                       <div id="content">
-                        details:
+                        DETAILS: {' '}
                         {trial.description}
                       </div>
                       {filterTreatments(trial.id).map((treatment) => {
                         return (
-                          <>
-                            <div id="content">{treatment.treatment_name}</div>
-                            <div id="content">
-                              {treatment.frequencies.map((freq) => (
+                          <div id="trt-con">
+                            <div id="left-trt">
+                              <div id="treatment-content">
+                                TREATMENT: {treatment.treatment_name}
+                              </div>
+                              <div id="content">
+                                {treatment.frequencies.map((freq) => (
+                                  <div id="content">
+                                    <p>frequencies:{' '}{freq.freq}</p>
+                                  </div>
+                                ))}
                                 <div id="content">
-                                  frequencies:
-                                  <li>{freq.freq}</li>
+                                  Comments: {treatment.comments}
                                 </div>
-                              ))}
+                              </div>
                             </div>
-                            <div id="content">{treatment.comments}</div>
-                            <button
-                              onClick={() =>
-                                treatmentControlCenterRedirect(treatment.id)
-                              }
-                            >
-                              Change treatment
-                            </button>
-                          </>
+                            <div className="update-trt">
+                              <button
+                                onClick={() =>
+                                  treatmentControlCenterRedirect(treatment.id)
+                                }
+                              >
+                                Change treatment
+                              </button>
+                            </div>
+                          </div>
                         );
                       })}
                     </div>

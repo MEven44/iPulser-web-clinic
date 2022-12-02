@@ -2,7 +2,7 @@ import React from 'react'
 import { useState, useEffect} from 'react'
 import {useSelector, useDispatch} from 'react-redux'
 import { useParams, useHistory} from 'react-router-dom'
-import { createTreatmentThunk, getTreatmentsOfTrial, updateTreatmentThunk } from '../../store/treatments'
+import { createTreatmentThunk, getAllTreatments, getTreatmentsOfTrial, updateTreatmentThunk } from '../../store/treatments'
 import './treatments.css'
 
 
@@ -48,6 +48,7 @@ const handleSubmit = async (e) => {
     };
    
     dispatch(createTreatmentThunk(treatment))
+    dispatch(getAllTreatments())
     history.push('/summery')
 }
 
