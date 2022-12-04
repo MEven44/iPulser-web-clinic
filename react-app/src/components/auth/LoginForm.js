@@ -29,7 +29,7 @@ const LoginForm = () => {
 
   const demoUser = async (e) => {
     e.preventDefault()
-    renderErr(true)
+    
     const data = await dispatch(login("demo@aa.io", "password"))
     if (data) {
       setErrors(data)
