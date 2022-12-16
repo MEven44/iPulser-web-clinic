@@ -30,7 +30,9 @@ const NavBar = ({loaded}) => {
       >
         Design a trial
       </NavLink>
-
+      <NavLink id='text-bar' to='/treatments/control'>
+        Treat
+      </NavLink>
       <LogoutButton />
     </nav>
   );

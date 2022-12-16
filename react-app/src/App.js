@@ -11,6 +11,7 @@ import { authenticate } from './store/session';
 import Treatments from './components/TreatmentInput';
 import Welcome from './components/WelcomePage';
 import UpdateTreatment from './components/updateTreatment';
+import DeviceBluetooth from './components/DeviceControls';
 import '../src/index.css'
 
 function App() {
@@ -32,7 +33,7 @@ function App() {
       {loaded && (
         <Switch>
           <Route path="/login-signup" exact={true}>
-            <div className='login-container'>
+            <div className="login-container">
               <div>
                 <LoginForm />
               </div>
@@ -44,7 +45,10 @@ function App() {
           <ProtectedRoute path="/trial-design" exact={true}>
             <TrialDetails />
           </ProtectedRoute>
-          <ProtectedRoute path='/treatments/freq/:id'>
+          <Route path="/treatments/control">
+            <DeviceBluetooth />
+          </Route>
+          <ProtectedRoute path="/treatments/freq/:id">
             <UpdateTreatment />
           </ProtectedRoute>
           <ProtectedRoute path="/treatments/:trialId">
