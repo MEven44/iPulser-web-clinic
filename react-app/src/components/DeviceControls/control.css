@@ -1,0 +1,8 @@
+#buttons {
+    background-color: orange;
+    max-width: 20vw;
+    margin: 1%;
+    border-radius: 20px;
+    height: 5vh;
+    padding: 3%;
+}
